@@ -1,7 +1,7 @@
 {
-  "name": "passmaker",
+  "name": "passfather",
   "version": "1.0.1",
-  "description": "passmaker is very fast and powerful utility with zero dependencies to generate strong password",
+  "description": "passfather is very fast and powerful utility with zero dependencies to generate strong password",
   "author": "Evgeny Vyushin <e@vyushin.ru> (https://github.com/vyushin)",
   "contributors": [
     "Evgeny Vyushin <e@vyushin.ru> (https://github.com/vyushin)"
@@ -11,13 +11,13 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/vyushin/passmaker"
+    "url": "https://github.com/vyushin/passfather"
   },
   "bugs": {
-    "url": "https://github.com/vyushin/passmaker/issues"
+    "url": "https://github.com/vyushin/passfather/issues"
   },
-  "homepage": "https://github.com/vyushin/passmaker",
-  "main": "./src/passmaker.js",
+  "homepage": "https://github.com/vyushin/passfather",
+  "main": "./src/passfather.js",
   "license": "MIT",
   "keywords": [
     "password",

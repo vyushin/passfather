@@ -4,10 +4,10 @@ const { random, randomItem, keys, compact, isInteger, includesAll, isBoolean, is
  * Module name
  * @const
  */
-const MODULE_NAME = 'passmaker';
+const MODULE_NAME = 'passfather';
 
 /**
- * Default passmaker options
+ * Default passfather options
  * @const
  */
 const DEFAULT_OPTIONS = {
@@ -92,7 +92,7 @@ function getCharDiapasons(options) {
  * @param {Object} options
  * @return {String} Password
  */
-function passmaker(options) {
+function passfather(options) {
   const errorCode = OPTION_VALIDATORS.completely(options);
 
   if (errorCode > 0) {
@@ -105,4 +105,4 @@ function passmaker(options) {
   return timesMap(opts.length, () => String.fromCharCode(random(randomItem(randomItem(diapasons))))).join('');
 }
 
-module.exports = passmaker;
+module.exports = passfather;
