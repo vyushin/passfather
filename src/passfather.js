@@ -43,6 +43,7 @@ const OPTION_VALIDATORS = {
       () => options.hasOwnProperty('lowercase') === false || this.lowercase(options.lowercase),
       () => options.hasOwnProperty('symbols')   === false || this.symbols(options.symbols),
       () => options.hasOwnProperty('length')    === false || this.length(options.length),
+      () => includesAll(keys(options), without(keys(DEFAULT_OPTIONS), ['length'])) === false || keys(options).some(key => options[key] === true)
     ];
     return cases.findIndex(item => item() === false);
   },
@@ -61,6 +62,7 @@ ERROR_MESSAGES[4] = `[${MODULE_NAME}]: Option "uppercase" must be boolean`;
 ERROR_MESSAGES[5] = `[${MODULE_NAME}]: Option "lowercase" must be boolean`;
 ERROR_MESSAGES[6] = `[${MODULE_NAME}]: Option "symbols" must be boolean`;
 ERROR_MESSAGES[7] = `[${MODULE_NAME}]: Option "length" must be integer greater than 0`;
+ERROR_MESSAGES[8] = `[${MODULE_NAME}]: One of options [${without(keys(DEFAULT_OPTIONS), ['length']).join(', ')}] must be true`;
 
 /**
  * UTF-8 char diapasons

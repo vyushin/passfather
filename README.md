@@ -11,15 +11,25 @@
 
 ## Example
 
-It's very easy! Just import passfather and run it.
+It's very easy! Just import **passfather** and run it.
+
+###### ES6
 
 ```javascript
 import passfather from 'passfather';
 const password = passfather();
-console.log(password); // That is output "hI_hVF=/.T5f"
+console.log(password); // Output "hI_hVF=/.T5f"
 ```
 
-By default **passgen** doesn't require any options. But it's possible to pass options object to
+###### CommonJS
+
+```javascript
+const passfather = require('passfather');
+const password = passfather();
+console.log(password); // Output "q*)ExGM`>hZo"
+```
+
+By default **passfather** doesn't require any options. But it's possible to pass options object to
 customize password.
 
 ```javascript
@@ -50,10 +60,9 @@ const DEFAULT_OPTIONS = {
   length: 12,
 };
 ```
-
-It is not necessary to pass full option object to passfather...<br/>
 By default all of options are enabled.<br/>
-Just pass what you want to disable or custom length.
+It is not necessary to pass full option object to **passfather**...<br/>
+Just pass what you want to disable or length.
 
 For example:
 
@@ -68,7 +77,7 @@ console.log(password); // Output "r9GojHs0m3sh1lrMZMr5D9WNOTTDlF55"
 
 ## Contributing
 
-See [contributing](https://www.npmjs.com/package/passfather) guideline.
+See [contributing](https://github.com/vyushin/passfather/blob/master/CONTRIBUTING.md) guideline.
 
 ## License
 [MIT LICENSE](https://github.com/vyushin/passfather/blob/master/LICENSE)
