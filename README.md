@@ -28,6 +28,13 @@ const passfather = require('passfather');
 const password = passfather();
 console.log(password); // Output "q*)ExGM`>hZo"
 ```
+###### CDN
+```HTML
+<script src="https://unpkg.com/passfather/dist/passfather.min.js"></script>
+<script>
+    console.log( passfather() ); // Output "X7~m3}i7%<P)"
+</script>
+```
 
 By default **passfather** doesn't require any options. But it's possible to pass options object to
 customize password.
