@@ -9,6 +9,9 @@
 ###### NPM
 `npm install --save passfather`
 
+###### Yarn
+`yarn add passfather`
+
 ## Example
 
 It's very easy! Just import **passfather** and run it.
@@ -18,7 +21,7 @@ It's very easy! Just import **passfather** and run it.
 ```javascript
 import passfather from 'passfather';
 const password = passfather();
-console.log(password); // Output "hI_hVF=/.T5f"
+console.log(password); // Output "9g'Jta75Gl3w"
 ```
 
 ###### CommonJS
@@ -26,13 +29,13 @@ console.log(password); // Output "hI_hVF=/.T5f"
 ```javascript
 const passfather = require('passfather');
 const password = passfather();
-console.log(password); // Output "q*)ExGM`>hZo"
+console.log(password); // Output "4$Pi3V^F3v(F"
 ```
 ###### CDN
-```HTML
+```html
 <script src="https://unpkg.com/passfather/dist/passfather.min.js"></script>
 <script>
-    console.log( passfather() ); // Output "X7~m3}i7%<P)"
+    console.log( passfather() ); // Output "r_@1hDvFRMhA"
 </script>
 ```
 
@@ -48,7 +51,7 @@ const password = passfather({
   symbols: false, // Disable symbols
   length: 16,
 });
-console.log(password); // Output "4R7wikmfKEr12Pk3"
+console.log(password); // Output "40rAe2hqiM0UzTmN"
 ```
 
 **NOTE:** if option object is passed then it merges with default options object.
@@ -79,7 +82,7 @@ const password = passfather({
   symbols: false,
   length: 16,
 });
-console.log(password); // Output "r9GojHs0m3sh1lrMZMr5D9WNOTTDlF55"
+console.log(password); // Output "e0CgZti4awyJgC57"
 ```
 
 ## Contributing

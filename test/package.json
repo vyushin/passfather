@@ -1,7 +1,7 @@
 {
-  "name": "passfather-build",
+  "name": "passfather-test",
   "version": "1.0.0",
-  "description": "Build passfather package to most compatibility with browsers and Node.js",
+  "description": "Testing passfather",
   "author": "Evgeny Vyushin <e@vyushin.ru> (https://github.com/vyushin)",
   "contributors": [
     "Evgeny Vyushin <e@vyushin.ru> (https://github.com/vyushin)"
@@ -11,19 +11,18 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/vyushin/passfather/build"
+    "url": "https://github.com/vyushin/passfather/test"
   },
   "scripts": {
-    "prebuild": "rm -rf ../dist",
-    "build": "parcel build ../src/passfather.js --out-dir ../dist/ --out-file passfather.min.js --target browser --no-source-maps --no-cache --global passfather"
+    "test": "jest"
   },
   "bugs": {
     "url": "https://github.com/vyushin/passfather/issues"
   },
-  "homepage": "https://github.com/vyushin/passfather/build",
+  "homepage": "https://github.com/vyushin/passfather/test",
   "main": "./index.js",
   "license": "MIT",
   "devDependencies": {
-    "parcel": "^1.12.3"
+    "jest": "^24.8.0"
   }
 }

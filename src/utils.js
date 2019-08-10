@@ -126,10 +126,43 @@ function assign() {
  * Make empty array by length and map it
  * @param {Number} times
  * @param {Function} iteratee The function invoked per iteration
- * @return {Array}
+ * @return {Array}timesMap
  */
 function timesMap(times, iteratee) {
   return Array(times).fill().map(iteratee);
+}
+
+/**
+ * Make number sequence
+ * @param {Number} from
+ * @param {Number} to
+ * @param {Boolean} inclusive If true then result array will contain "to" number in last
+ * @return {Array} number[]
+ */
+function numSequence(from, to, inclusive) {
+  return (result => inclusive ? result.push(to) && result : result)(timesMap(to - from, (item, key) => from + key));
+}
+
+/**
+ * Shuffle array
+ * @param {Array} arr
+ * @return {Array}
+ */
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+/**
+ * Returns UTF-8 chars by diapason
+ * @param {Array} diapason [from, to]
+ * @return {String} All chars in one string
+ */
+function getCharsByDiapason(diapason) {
+  return String.fromCodePoint.apply(String, numSequence(diapason[0], diapason[1], true));
 }
 
 module.exports = {
@@ -147,4 +180,7 @@ module.exports = {
   isPlainObject,
   assign,
   timesMap,
+  numSequence,
+  shuffle,
+  getCharsByDiapason,
 };
