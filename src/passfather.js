@@ -1,4 +1,4 @@
-const { random, randomItem, keys, compact, isInteger, includesAll, isBoolean, isPlainObject, assign, timesMap, without } = require('./utils');
+const { random, randomItem, keys, compact, isInteger, includesAll, isBoolean, isPlainObject, assign, timesMap, without, shuffle } = require('./utils');
 
 /**
  * Module name
@@ -72,7 +72,7 @@ const CHAR_DIAPASONS = [
   [[48, 57 ]], // Numbers
   [[65, 90 ]], // Uppercase
   [[97, 122]], // Lowercase
-  [[33, 47], [58, 64], [91, 96], [123, 126]], // Symbols
+  [[33, 46], [58, 64], [94, 96], [123, 126]], // Symbols
 ];
 
 /**
@@ -103,8 +103,22 @@ function passfather(options) {
 
   const opts = assign({}, DEFAULT_OPTIONS, options);
   const diapasons = getCharDiapasons(opts);
+  const requiredChars = timesMap(diapasons.length, (item, index) => {
+    return String.fromCharCode(random(randomItem(diapasons[index])));
+  });
 
-  return timesMap(opts.length, () => String.fromCharCode(random(randomItem(randomItem(diapasons))))).join('');
+  if (requiredChars.length >= opts.length) {
+    return shuffle(requiredChars).slice(0, opts.length).join('');
+  }
+
+  return shuffle(timesMap(opts.length - requiredChars.length, () => {
+    return String.fromCharCode(random(randomItem(randomItem(diapasons))));
+  }).concat(requiredChars)).join('');
 }
 
-module.exports = passfather;
+module.exports = {
+  passfather,
+  DEFAULT_OPTIONS,
+  CHAR_DIAPASONS,
+  ERROR_MESSAGES,
+};
