@@ -15,7 +15,7 @@
   },
   "scripts": {
     "prebuild": "rm -rf ../dist",
-    "build": "parcel build ../src/passfather.js --out-dir ../dist/ --out-file passfather.min.js --target browser --no-source-maps --no-cache --global passfather"
+    "build": "parcel build ../src/index.js --out-dir ../dist/ --out-file passfather.min.js --target browser --no-source-maps --no-cache --global passfather"
   },
   "bugs": {
     "url": "https://github.com/vyushin/passfather/issues"
