@@ -1,6 +1,6 @@
 {
   "name": "passfather",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "passfather is very fast and powerful utility with zero dependencies to generate strong password",
   "author": "Evgeny Vyushin <e@vyushin.ru> (https://github.com/vyushin)",
   "contributors": [
@@ -15,7 +15,8 @@
   },
   "scripts": {
     "test": "cd ./test && npm test",
-    "prepublish": "npm test && cd ./build && npm run build"
+    "build": "cd ./build && npm run build",
+    "prepublish": "npm test && npm run build"
   },
   "bugs": {
     "url": "https://github.com/vyushin/passfather/issues"
