@@ -31,7 +31,17 @@ const passfather = require('passfather');
 const password = passfather();
 console.log(password); // Output "4$Pi3V^F3v(F"
 ```
+
+###### TypeScript
+
+```typescript
+import passfather from 'passfather';
+const password: string = passfather();
+console.log(password); // Output "3zj}E0uuW6}V"
+```
+
 ###### CDN
+
 ```html
 <script src="https://unpkg.com/passfather/dist/passfather.min.js"></script>
 <script>
