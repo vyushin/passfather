@@ -10,8 +10,8 @@ function isBrowser() {
 
 function getRandomInt() {
   return isBrowser()
-    ? crypto.getRandomValues(new Uint8Array(1))[0]
-    : parseInt(crypto.randomBytes(1).toString('hex'), 16);
+    ? crypto.getRandomValues(new Uint32Array(1))[0]
+    : parseInt(crypto.randomBytes(4).toString('hex'), 16);
 }
 
 /**
@@ -22,7 +22,7 @@ function getRandomInt() {
 function random(diapason) {
   const randomInt = getRandomInt();
   const range = diapason[1] - diapason[0] + 1;
-  return (randomInt >= Math.floor(256 / range) * range) ? random(diapason) : diapason[0] + (randomInt % range);
+  return (randomInt >= Math.floor(4294967295 / range) * range) ? random(diapason) : diapason[0] + (randomInt % range);
 }
 
 /**
