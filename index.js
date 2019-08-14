@@ -1,6 +1,5 @@
 const passfather = require('./src/index');
 const password = passfather({
-  symbols: false,
-  length: 16,
+  length: 32,
 });
 console.log(password)
