@@ -1,10 +1,28 @@
+const crypto = require('crypto');
+
+/**
+ * Returns true if the code runs in browser
+ * @return {Boolean}
+ */
+function isBrowser() {
+  return global.hasOwnProperty('Window') && global instanceof global.Window;
+}
+
+function getRandomInt() {
+  return isBrowser()
+    ? crypto.getRandomValues(new Uint8Array(1))[0]
+    : parseInt(crypto.randomBytes(1).toString('hex'), 16);
+}
+
 /**
  * Returns random number
  * @param {[Number, Number]} diapason [min, max]
  * @return {Number} Random number
  */
 function random(diapason) {
-  return Math.floor(diapason[0] + Math.random() * (diapason[1] + 1 - diapason[0]));
+  const randomInt = getRandomInt();
+  const range = diapason[1] - diapason[0] + 1;
+  return (randomInt >= Math.floor(256 / range) * range) ? random(diapason) : diapason[0] + (randomInt % range);
 }
 
 /**
@@ -166,6 +184,8 @@ function getCharsByDiapason(diapason) {
 }
 
 module.exports = {
+  isBrowser,
+  getRandomInt,
   random,
   randomItem,
   without,
