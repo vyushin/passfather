@@ -1,4 +1,4 @@
-const crypto = require('crypto');
+const crypto = isBrowser() ? global.crypto : eval('require("crypto")');
 
 /**
  * Returns true if the code runs in browser
