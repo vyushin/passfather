@@ -1,5 +1,6 @@
 const { resolve } = require('path');
-const { SRC_DIR, DIST_DIR, LIBRARY_NAME } = require('./constants');
+const CopyPlugin = require('copy-webpack-plugin');
+const { SRC_DIR, DIST_DIR } = require('./constants');
 
 module.exports = {
 
@@ -10,7 +11,7 @@ module.exports = {
   output: {
     filename: '[name].min.js',
     path: DIST_DIR,
-    library: LIBRARY_NAME,
+    library: 'passfather',
   },
 
   module: {
@@ -29,6 +30,12 @@ module.exports = {
       },
     ],
   },
+
+  plugins: [
+    new CopyPlugin([
+      { from: resolve(SRC_DIR, './index.d.ts'), to: resolve(DIST_DIR, './passfather.d.ts') },
+    ]),
+  ],
 
   target: 'web',
 

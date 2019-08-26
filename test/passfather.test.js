@@ -1,6 +1,6 @@
 const { DEFAULT_OPTIONS, CHAR_DIAPASONS, ERROR_MESSAGES } = require('../src/passfather');
 const { random, getCharsByDiapason, without } = require('../src/utils');
-const passfather = require('../src/index');
+const passfather = require('../dist/passfather');
 
 const CHARS = {
   numbers:   CHAR_DIAPASONS[0].map(diapason => getCharsByDiapason(diapason)).join(''),
