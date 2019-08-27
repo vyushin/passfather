@@ -14,6 +14,7 @@
     "url": "https://github.com/vyushin/passfather"
   },
   "scripts": {
+    "install-all": "(cd ./build && npm install) & (cd ../test && npm install)",
     "build:web": "cd ./build && npm run build:web",
     "build:node": "cd ./build && npm run build:node",
     "build": "cd ./build && npm run build",
