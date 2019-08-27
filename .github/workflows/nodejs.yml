@@ -1,4 +1,4 @@
-name: Passfather CI
+name: Run test
 
 on: [pull_request]
 
