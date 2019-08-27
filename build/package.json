@@ -17,7 +17,7 @@
     "build:web": "webpack --mode production --config webpack.web.config.js",
     "build:node": "webpack --mode production --config webpack.node.config.js",
     "prebuild": "rm -rf ../dist",
-    "build": "npm run build:node && npm run build:web"
+    "build": "npm run build:node & npm run build:web"
   },
   "bugs": {
     "url": "https://github.com/vyushin/passfather/issues"

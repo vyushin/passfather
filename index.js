@@ -1,2 +1,2 @@
 const passfather = require('./dist/passfather');
-console.log(passfather());
+console.log(passfather({ length: 30 }));
