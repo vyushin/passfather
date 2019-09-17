@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/vyushin/passfather",
   "main": "./dist/passfather.js",
+  "types": "./dist/passfather.d.ts",
   "license": "MIT",
   "keywords": [
     "password",
