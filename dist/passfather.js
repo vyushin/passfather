@@ -115,11 +115,14 @@ var _require = __webpack_require__(2),
     isInteger = _require.isInteger,
     includesAll = _require.includesAll,
     isBoolean = _require.isBoolean,
+    isArray = _require.isArray,
     isPlainObject = _require.isPlainObject,
     assign = _require.assign,
     timesMap = _require.timesMap,
     without = _require.without,
-    shuffle = _require.shuffle;
+    shuffle = _require.shuffle,
+    isCharCode = _require.isCharCode,
+    includes = _require.includes;
 /**
  * Module name
  * @const
@@ -137,10 +140,12 @@ var DEFAULT_OPTIONS = {
   uppercase: true,
   lowercase: true,
   symbols: true,
-  length: 12
+  length: 12,
+  ranges: null
 };
 /**
  * Functions to validate options
+ * Methods must return true is validation successfully passed
  */
 
 var OPTION_VALIDATORS = {
@@ -159,6 +164,17 @@ var OPTION_VALIDATORS = {
   length: function length(value) {
     return isInteger(value) && value > 0;
   },
+  ranges: function ranges(value) {
+    var isArrayOfRanges = function isArrayOfRanges(some) {
+      return isArray(some) && some.length > 0 && some.every(function (item) {
+        return isArray(item) && isCharCode(item[0]) && isCharCode(item[1]);
+      });
+    };
+
+    return isArray(value) && value.length > 0 && value.every(function (item) {
+      return isArrayOfRanges(item);
+    });
+  },
 
   /**
    * Completely option validate
@@ -168,13 +184,15 @@ var OPTION_VALIDATORS = {
   completely(options) {
     var _this = this;
 
-    var cases = [// Order is important, because index of case matches with error code
+    var cases = [// [IMPORTANT] Order is important, because index of case matches with error code
     function () {
       return (options === undefined || isPlainObject(options) && keys(options).length === 0) === false;
     }, function () {
       return isPlainObject(options);
     }, function () {
       return includesAll(keys(DEFAULT_OPTIONS), keys(options));
+    }, function () {
+      return options.hasOwnProperty('ranges') === false || _this.ranges(options.ranges);
     }, function () {
       return options.hasOwnProperty('numbers') === false || _this.numbers(options.numbers);
     }, function () {
@@ -186,8 +204,9 @@ var OPTION_VALIDATORS = {
     }, function () {
       return options.hasOwnProperty('length') === false || _this.length(options.length);
     }, function () {
-      return includesAll(keys(options), without(keys(DEFAULT_OPTIONS), ['length'])) === false || keys(options).some(function (key) {
-        return options[key] === true;
+      var opts = assign({}, DEFAULT_OPTIONS, options);
+      return without(keys(opts), ['length']).some(function (key) {
+        return key === 'ranges' ? isArray(opts[key]) : opts[key] === true;
       });
     }];
     return cases.findIndex(function (item) {
@@ -198,36 +217,37 @@ var OPTION_VALIDATORS = {
 };
 /**
  * Error messages by error code.
- * Order is important, because index of error message matches with validation case.
+ * [IMPORTANT] Order is important, because index of error message matches with validation case.
  */
 
 var ERROR_MESSAGES = [];
 ERROR_MESSAGES[0] = 'No errors';
 ERROR_MESSAGES[1] = `[${MODULE_NAME}]: Option must be an object`;
 ERROR_MESSAGES[2] = `[${MODULE_NAME}]: Options must contains only one (or several) of [${keys(DEFAULT_OPTIONS).join(', ')}]`;
-ERROR_MESSAGES[3] = `[${MODULE_NAME}]: Option "numbers" must be boolean`;
-ERROR_MESSAGES[4] = `[${MODULE_NAME}]: Option "uppercase" must be boolean`;
-ERROR_MESSAGES[5] = `[${MODULE_NAME}]: Option "lowercase" must be boolean`;
-ERROR_MESSAGES[6] = `[${MODULE_NAME}]: Option "symbols" must be boolean`;
-ERROR_MESSAGES[7] = `[${MODULE_NAME}]: Option "length" must be integer greater than 0`;
-ERROR_MESSAGES[8] = `[${MODULE_NAME}]: One of options [${without(keys(DEFAULT_OPTIONS), ['length']).join(', ')}] must be true`;
+ERROR_MESSAGES[3] = `[${MODULE_NAME}]: Option "ranges" must be array with array of UTF-8 char code range. For example: [ [[48, 57 ]], [[33, 46], [58, 64], [94, 96], [123, 126]] ] `;
+ERROR_MESSAGES[4] = `[${MODULE_NAME}]: Option "numbers" must be boolean`;
+ERROR_MESSAGES[5] = `[${MODULE_NAME}]: Option "uppercase" must be boolean`;
+ERROR_MESSAGES[6] = `[${MODULE_NAME}]: Option "lowercase" must be boolean`;
+ERROR_MESSAGES[7] = `[${MODULE_NAME}]: Option "symbols" must be boolean`;
+ERROR_MESSAGES[8] = `[${MODULE_NAME}]: Option "length" must be integer greater than 0`;
+ERROR_MESSAGES[9] = `[${MODULE_NAME}]: At less one of options [${without(keys(DEFAULT_OPTIONS), ['length']).join(', ')}] mustn't be false`;
 /**
  * UTF-8 char diapasons
  * @const
  */
 
-var CHAR_DIAPASONS = [[[48, 57]], // Numbers
+var CHAR_RANGES = [[[48, 57]], // Numbers
 [[65, 90]], // Uppercase
 [[97, 122]], // Lowercase
 [[33, 46], [58, 64], [94, 96], [123, 126]]];
 /**
- * Returns char diapasons by options
+ * Returns char ranges by options
  * @param {Object} options
  * @return {Array} Char diapasons
  */
 
-function getCharDiapasons(options) {
-  return compact([].concat(options.numbers && [CHAR_DIAPASONS[0]], options.uppercase && [CHAR_DIAPASONS[1]], options.lowercase && [CHAR_DIAPASONS[2]], options.symbols && [CHAR_DIAPASONS[3]]));
+function getCharRanges(options) {
+  return compact([].concat(options.numbers && [CHAR_RANGES[0]], options.uppercase && [CHAR_RANGES[1]], options.lowercase && [CHAR_RANGES[2]], options.symbols && [CHAR_RANGES[3]], options.ranges && options.ranges));
 }
 /**
  * Generate password
@@ -244,9 +264,9 @@ function passfather(options) {
   }
 
   var opts = assign({}, DEFAULT_OPTIONS, options);
-  var diapasons = getCharDiapasons(opts);
-  var requiredChars = timesMap(diapasons.length, function (item, index) {
-    return String.fromCharCode(random(randomItem(diapasons[index])));
+  var charRanges = getCharRanges(opts);
+  var requiredChars = timesMap(charRanges.length, function (item, index) {
+    return String.fromCharCode(random(randomItem(charRanges[index])));
   });
 
   if (requiredChars.length >= opts.length) {
@@ -254,14 +274,14 @@ function passfather(options) {
   }
 
   return shuffle(timesMap(opts.length - requiredChars.length, function () {
-    return String.fromCharCode(random(randomItem(randomItem(diapasons))));
+    return String.fromCharCode(random(randomItem(randomItem(charRanges))));
   }).concat(requiredChars)).join('');
 }
 
 module.exports = {
   passfather,
   DEFAULT_OPTIONS,
-  CHAR_DIAPASONS,
+  CHAR_RANGES,
   ERROR_MESSAGES
 };
 
@@ -387,6 +407,16 @@ function isBoolean(value) {
   return value === true || value === false;
 }
 /**
+ * Returns true if the value is array
+ * @param {*} value
+ * @return {Boolean}
+ */
+
+
+function isArray(value) {
+  return value instanceof Array;
+}
+/**
  * Returns object keys as an array
  * @param {Object} obj
  * @return {Array}
@@ -483,6 +513,27 @@ function shuffle(arr) {
 function getCharsByDiapason(diapason) {
   return String.fromCodePoint.apply(String, numSequence(diapason[0], diapason[1], true));
 }
+/**
+ * Returns true is value is UTF-8 char code
+ * @param {*} value
+ * @return {Boolean}
+ */
+
+
+function isCharCode(value) {
+  return String.fromCharCode(value) !== String.fromCharCode(false);
+}
+/**
+ * Escape regexp operators
+ * @link https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Regular_Expressions
+ * @param {*} value
+ * @return {String}
+ */
+
+
+function escapeRegExp(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+}
 
 module.exports = {
   isBrowser,
@@ -498,12 +549,15 @@ module.exports = {
   keys,
   isInteger,
   isBoolean,
+  isArray,
   isPlainObject,
   assign,
   timesMap,
   numSequence,
   shuffle,
-  getCharsByDiapason
+  getCharsByDiapason,
+  isCharCode,
+  escapeRegExp
 };
 
 /***/ })
