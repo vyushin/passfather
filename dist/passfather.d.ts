@@ -6,6 +6,7 @@ declare module "passfather" {
     lowercase?: boolean | undefined;
     symbols?: boolean | undefined;
     length?: number | undefined;
+    ranges?: Array<number[]> | undefined;
   }
 
   export default function passfather(options?: PassfatherOptions): string;

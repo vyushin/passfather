@@ -102,6 +102,15 @@ function isBoolean(value) {
 }
 
 /**
+ * Returns true if the value is array
+ * @param {*} value
+ * @return {Boolean}
+ */
+function isArray(value) {
+  return value instanceof Array;
+}
+
+/**
  * Returns object keys as an array
  * @param {Object} obj
  * @return {Array}
@@ -183,6 +192,25 @@ function getCharsByDiapason(diapason) {
   return String.fromCodePoint.apply(String, numSequence(diapason[0], diapason[1], true));
 }
 
+/**
+ * Returns true is value is UTF-8 char code
+ * @param {*} value
+ * @return {Boolean}
+ */
+function isCharCode(value) {
+  return String.fromCharCode(value) !== String.fromCharCode(false);
+}
+
+/**
+ * Escape regexp operators
+ * @link https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Regular_Expressions
+ * @param {*} value
+ * @return {String}
+ */
+function escapeRegExp(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+}
+
 module.exports = {
   isBrowser,
   getRandomInt,
@@ -197,10 +225,13 @@ module.exports = {
   keys,
   isInteger,
   isBoolean,
+  isArray,
   isPlainObject,
   assign,
   timesMap,
   numSequence,
   shuffle,
   getCharsByDiapason,
+  isCharCode,
+  escapeRegExp,
 };

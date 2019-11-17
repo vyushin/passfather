@@ -1,14 +1,23 @@
-const { DEFAULT_OPTIONS, CHAR_DIAPASONS, ERROR_MESSAGES } = require('../src/passfather');
-const { random, getCharsByDiapason, without } = require('../src/utils');
+const { DEFAULT_OPTIONS, CHAR_RANGES, ERROR_MESSAGES } = require('../src/passfather');
+const { random, getCharsByDiapason, without, escapeRegExp } = require('../src/utils');
 const passfather = require('../dist/passfather');
 
+CHAR_RANGES.push([ // Fictional ranges
+  [ [1248, 1263] ],
+  [ [1264, 1279], [1680, 1695], [2320, 2335] ]
+]);
+
 const CHARS = {
-  numbers:   CHAR_DIAPASONS[0].map(diapason => getCharsByDiapason(diapason)).join(''),
-  uppercase: CHAR_DIAPASONS[1].map(diapason => getCharsByDiapason(diapason)).join(''),
-  lowercase: CHAR_DIAPASONS[2].map(diapason => getCharsByDiapason(diapason)).join(''),
-  symbols:   CHAR_DIAPASONS[3].map(diapason => getCharsByDiapason(diapason)).join(''),
+  numbers:   escapeRegExp(CHAR_RANGES[0].map(range => getCharsByDiapason(range)).join('')),
+  uppercase: escapeRegExp(CHAR_RANGES[1].map(range => getCharsByDiapason(range)).join('')),
+  lowercase: escapeRegExp(CHAR_RANGES[2].map(range => getCharsByDiapason(range)).join('')),
+  symbols:   escapeRegExp(CHAR_RANGES[3].map(range => getCharsByDiapason(range)).join('')),
+  ranges:    [
+    escapeRegExp(CHAR_RANGES[4][0].map(range => getCharsByDiapason(range)).join('')),
+    escapeRegExp(CHAR_RANGES[4][1].map(range => getCharsByDiapason(range)).join('')),
+  ],
   all() {
-    return `${this.numbers}${this.uppercase}${this.lowercase}${this.symbols}`;
+    return `${this.numbers}${this.uppercase}${this.lowercase}${this.symbols}${this.ranges.join('')}`;
   }
 };
 
@@ -73,54 +82,44 @@ describe('Make password without...', () => {
 
 describe('Make passwords contains only...', () => {
 
-  describe('Make password contains only numbers', () => {
+  it('Make password contains only numbers', () => {
     const password = passfather({ uppercase: false, lowercase: false, symbols: false });
-    it('Default length',             () => expect(password.length).toBe(DEFAULT_OPTIONS.length));
-    it('Contains numbers',           () => expect(password).toMatch(new RegExp(`[${CHARS.numbers}]+`)));
-    it('Does not contain uppercase', () => expect(password).not.toMatch(new RegExp(`[${CHARS.uppercase}]+`)));
-    it('Does not contain lowercase', () => expect(password).not.toMatch(new RegExp(`[${CHARS.lowercase}]+`)));
-    it('Does not contain symbols',   () => expect(password).not.toMatch(new RegExp(`[${CHARS.symbols}]+`)));
+    expect(password).toMatch(new RegExp(`^[${CHARS.numbers}]+$`));
   });
 
-  describe('Make password contains only uppercase', () => {
+  it('Make password contains only uppercase', () => {
     const password = passfather({ numbers: false, lowercase: false, symbols: false });
-    it('Default length',             () => expect(password.length).toBe(DEFAULT_OPTIONS.length));
-    it('Does not contain numbers',   () => expect(password).not.toMatch(new RegExp(`[${CHARS.numbers}]+`)));
-    it('Contains uppercase',         () => expect(password).toMatch(new RegExp(`[${CHARS.uppercase}]+`)));
-    it('Does not contain lowercase', () => expect(password).not.toMatch(new RegExp(`[${CHARS.lowercase}]+`)));
-    it('Does not contain symbols',   () => expect(password).not.toMatch(new RegExp(`[${CHARS.symbols}]+`)));
+    expect(password).toMatch(new RegExp(`^[${CHARS.uppercase}]+$`));
   });
 
-  describe('Make password contains only lowercase', () => {
+  it('Make password contains only lowercase', () => {
     const password = passfather({ numbers: false, uppercase: false, symbols: false });
-    it('Default length',             () => expect(password.length).toBe(DEFAULT_OPTIONS.length));
-    it('Does not contain numbers',   () => expect(password).not.toMatch(new RegExp(`[${CHARS.numbers}]+`)));
-    it('Does not contain uppercase', () => expect(password).not.toMatch(new RegExp(`[${CHARS.uppercase}]+`)));
-    it('Contains lowercase',         () => expect(password).toMatch(new RegExp(`[${CHARS.lowercase}]+`)));
-    it('Does not contain symbols',   () => expect(password).not.toMatch(new RegExp(`[${CHARS.symbols}]+`)));
+    expect(password).toMatch(new RegExp(`^[${CHARS.lowercase}]+$`));
   });
 
-  describe('Make password contains only symbols', () => {
+  it('Make password contains only symbols', () => {
     const password = passfather({ numbers: false, uppercase: false, lowercase: false });
-    it('Default length',             () => expect(password.length).toBe(DEFAULT_OPTIONS.length));
-    it('Does not contain numbers',   () => expect(password).not.toMatch(new RegExp(`[${CHARS.numbers}]+`)));
-    it('Does not contain uppercase', () => expect(password).not.toMatch(new RegExp(`[${CHARS.uppercase}]+`)));
-    it('Does not contain lowercase', () => expect(password).not.toMatch(new RegExp(`[${CHARS.lowercase}]+`)));
-    it('Contains symbols',           () => expect(password).toMatch(new RegExp(`[${CHARS.symbols}]+`)));
+    expect(password).toMatch(new RegExp(`^[${CHARS.symbols}]+$`));
+  });
+
+  it('Make password contains only ranges', () => {
+    const password = passfather({ numbers: false, uppercase: false, lowercase: false, symbols: false, ranges: CHAR_RANGES[4] });
+    expect(password).toMatch(new RegExp(`^[${CHARS.ranges.join('')}]+$`));
   });
 
 });
 
 describe('Make short password with guaranteed chars set', () => {
 
-  describe('Make short password with guaranteed all symbols', () => {
-    const length = 4;
-    const password = passfather({ length });
+  describe('Make short password with guaranteed numbers, uppercase, lowercase, symbols and ranges', () => {
+    const length = 6; // [IMPORTANT] Length is important. number + uppercase + lowercase + symbol + two ranges = 6
+    const password = passfather({ length, ranges: CHAR_RANGES[4] });
     it('Default length',     () => expect(password.length).toBe(length));
     it('Contains numbers',   () => expect(password).toMatch(new RegExp(`[${CHARS.numbers}]+`)));
     it('Contains uppercase', () => expect(password).toMatch(new RegExp(`[${CHARS.uppercase}]+`)));
     it('Contains lowercase', () => expect(password).toMatch(new RegExp(`[${CHARS.lowercase}]+`)));
     it('Contains symbols',   () => expect(password).toMatch(new RegExp(`[${CHARS.symbols}]+`)));
+    it('Contains ranges',    () => expect(password).toMatch(new RegExp(`[${CHARS.ranges.join('')}]+`)));
   });
 
   describe('Make short password with guaranteed numbers, uppercase, lowercase', () => {
@@ -163,6 +162,17 @@ describe('Make short password with guaranteed chars set', () => {
     it('Contains symbols',           () => expect(password).toMatch(new RegExp(`[${CHARS.symbols}]+`)));
   });
 
+  describe('Make short password with guaranteed ranges', () => {
+    const length = 2;
+    const password = passfather({ length, numbers: false, uppercase: false, lowercase: false, symbols: false, ranges:  CHAR_RANGES[4] });
+    it('Default length',              () => expect(password.length).toBe(length));
+    it('Does not contains numbers',   () => expect(password).not.toMatch(new RegExp(`[${CHARS.numbers}]+`)));
+    it('Does not contains uppercase', () => expect(password).not.toMatch(new RegExp(`[${CHARS.uppercase}]+`)));
+    it('Does not contain lowercase',  () => expect(password).not.toMatch(new RegExp(`[${CHARS.lowercase}]+`)));
+    it('Does not contains symbols',   () => expect(password).not.toMatch(new RegExp(`[${CHARS.symbols}]+`)));
+    it('Contains ranges',             () => expect(password).toMatch(new RegExp(`^[${CHARS.ranges.join('')}]+$`)));
+  });
+
 });
 
 describe('Make password with empty options object', () => {
@@ -186,34 +196,50 @@ describe('Make password with invalid options', () => {
     expect(() => passfather({ unknown: true })).toThrow(ERROR_MESSAGES[2])
   });
 
+  describe('With invalid "ranges" option', () => {
+    const incorrectRangeStructuresAndValues = [
+      [], [[]], [[], []], [[[]]], [[[]], [[]]],
+      [48, 57], [48], [[48, 57], []], [[48, 57], [48]],
+      [[[48, 57]], [48, 57]], [[[-1, 'incorrect']]], [[[true, 57]]],
+    ];
+    test.each(args.slice(2))(
+        'With %p "range" value',
+        (arg) => expect(() => passfather({ ranges: arg })).toThrow(ERROR_MESSAGES[3]),
+    );
+    test.each(incorrectRangeStructuresAndValues.slice(2))(
+        'With incorrect "range" option structure %p',
+        (arg) => expect(() => passfather({ ranges: arg })).toThrow(ERROR_MESSAGES[3]),
+    );
+  });
+
   test.each(args.slice(2))(
     'With %p "numbers" value',
-    (arg) => expect(() => passfather({ numbers: arg })).toThrow(ERROR_MESSAGES[3]),
+    (arg) => expect(() => passfather({ numbers: arg })).toThrow(ERROR_MESSAGES[4]),
   );
 
   test.each(args.slice(2))(
     'With %p "uppercase" value',
-    (arg) => expect(() => passfather({ uppercase: arg })).toThrow(ERROR_MESSAGES[4]),
+    (arg) => expect(() => passfather({ uppercase: arg })).toThrow(ERROR_MESSAGES[5]),
   );
 
   test.each(args.slice(2))(
     'With %p "lowercase" value',
-    (arg) => expect(() => passfather({ lowercase: arg })).toThrow(ERROR_MESSAGES[5]),
+    (arg) => expect(() => passfather({ lowercase: arg })).toThrow(ERROR_MESSAGES[6]),
   );
 
   test.each(args.slice(2))(
     'With %p "symbols" value',
-    (arg) => expect(() => passfather({ symbols: arg })).toThrow(ERROR_MESSAGES[6]),
+    (arg) => expect(() => passfather({ symbols: arg })).toThrow(ERROR_MESSAGES[7]),
   );
 
   test.each(without(args, [1]).concat([-1, 0.5, 1.5]))(
     'With %p "length" value',
-    (arg) => expect(() => passfather({ length: arg })).toThrow(ERROR_MESSAGES[7]),
+    (arg) => expect(() => passfather({ length: arg })).toThrow(ERROR_MESSAGES[8]),
   );
 
   it('When all options are false', () => {
     const optinos = { numbers: false, uppercase: false, lowercase: false, symbols: false };
-    expect(() => passfather(optinos)).toThrow(ERROR_MESSAGES[8])
+    expect(() => passfather(optinos)).toThrow(ERROR_MESSAGES[9])
   });
 
 });
