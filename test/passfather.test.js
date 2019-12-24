@@ -1,5 +1,7 @@
-const { DEFAULT_OPTIONS, CHAR_RANGES, ERROR_MESSAGES } = require('../src/passfather');
+const { CHAR_RANGES } = require('../src/passfather');
+const { ERROR_MESSAGES, DEFAULT_OPTIONS } = require('../src/validatingOptions');
 const { random, getCharsByDiapason, without, escapeRegExp } = require('../src/utils');
+const PRNGs = require('../src/PRNGs');
 const passfather = require('../dist/passfather');
 
 CHAR_RANGES.push([ // Fictional ranges
@@ -187,10 +189,12 @@ describe('Make password with empty options object', () => {
 describe('Make password with invalid options', () => {
   const args = [true, false, null, 0, 1, '', [], Symbol('passfather')];
 
-  test.each(args)(
-    'Passing %p',
-    (arg) => expect(() => passfather(arg)).toThrow(ERROR_MESSAGES[1]),
-  );
+  describe('With invalid option object', () => {
+    test.each(args)(
+      'Passing %p',
+      (arg) => expect(() => passfather(arg)).toThrow(ERROR_MESSAGES[1]),
+    );
+  });
 
   it('With unknown options property', () => {
     expect(() => passfather({ unknown: true })).toThrow(ERROR_MESSAGES[2])
@@ -212,34 +216,71 @@ describe('Make password with invalid options', () => {
     );
   });
 
-  test.each(args.slice(2))(
-    'With %p "numbers" value',
-    (arg) => expect(() => passfather({ numbers: arg })).toThrow(ERROR_MESSAGES[4]),
-  );
+  describe('With invalid "numbers" option', () => {
+    test.each(args.slice(2))(
+      'Passing %p value',
+      (arg) => expect(() => passfather({ numbers: arg })).toThrow(ERROR_MESSAGES[4]),
+    );
+  });
 
-  test.each(args.slice(2))(
-    'With %p "uppercase" value',
-    (arg) => expect(() => passfather({ uppercase: arg })).toThrow(ERROR_MESSAGES[5]),
-  );
+  describe('With invalid "uppercase" option', () => {
+    test.each(args.slice(2))(
+      'Passing %p value',
+      (arg) => expect(() => passfather({ uppercase: arg })).toThrow(ERROR_MESSAGES[5]),
+    );
+  });
 
-  test.each(args.slice(2))(
-    'With %p "lowercase" value',
-    (arg) => expect(() => passfather({ lowercase: arg })).toThrow(ERROR_MESSAGES[6]),
-  );
+  describe('With invalid "lowercase" option', () => {
+    test.each(args.slice(2))(
+      'Passing %p value',
+      (arg) => expect(() => passfather({ lowercase: arg })).toThrow(ERROR_MESSAGES[6]),
+    );
+  });
 
-  test.each(args.slice(2))(
-    'With %p "symbols" value',
-    (arg) => expect(() => passfather({ symbols: arg })).toThrow(ERROR_MESSAGES[7]),
-  );
+  describe('With invalid "symbols" option', () => {
+    test.each(args.slice(2))(
+      'Passing %p value',
+      (arg) => expect(() => passfather({ symbols: arg })).toThrow(ERROR_MESSAGES[7]),
+    );
+  });
 
-  test.each(without(args, [1]).concat([-1, 0.5, 1.5]))(
-    'With %p "length" value',
-    (arg) => expect(() => passfather({ length: arg })).toThrow(ERROR_MESSAGES[8]),
-  );
+  describe('With invalid "length" option', () => {
+    test.each(without(args, [1]).concat([-1, 0.5, 1.5]))(
+      'Passing %p value',
+      (arg) => expect(() => passfather({ length: arg })).toThrow(ERROR_MESSAGES[8]),
+    );
+  });
 
-  it('When all options are false', () => {
+  describe('With invalid "symbols" option', () => {
+    test.each(args.slice(2))(
+      'Passing %p value',
+      (arg) => expect(() => passfather({ symbols: arg })).toThrow(ERROR_MESSAGES[7]),
+    );
+  });
+
+  describe('With invalid "prng" option', () => {
+    test.each(args.slice(2))(
+      'Passing %p value',
+      (arg) => expect(() => passfather({ prng: arg })).toThrow(ERROR_MESSAGES[9]),
+    );
+  });
+
+  describe('With invalid "seed" option', () => {
+    const addArgs = [[1, '', NaN], [2, 'a', {}]];
+    test.each(args.concat(addArgs))(
+      'Passing %p value',
+      (arg) => expect(() => passfather({ seed: arg })).toThrow(ERROR_MESSAGES[10]),
+    );
+  });
+
+  it('When numbers, uppercase, lowercase, symbols are false', () => {
     const optinos = { numbers: false, uppercase: false, lowercase: false, symbols: false };
-    expect(() => passfather(optinos)).toThrow(ERROR_MESSAGES[9])
+    expect(() => passfather(optinos)).toThrow(ERROR_MESSAGES[11])
+  });
+
+  it('When "seed" options is passed without "prng" options', () => {
+    const optinos = { seed: [1, 2, 3] };
+    expect(() => passfather(optinos)).toThrow(ERROR_MESSAGES[12])
   });
 
 });

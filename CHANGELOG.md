@@ -1,3 +1,8 @@
+## 2.0.0 (December 25, 2019)
+
+* Add multiple pseudorandom number generators
+* Code refactoring
+
 ## 1.4.1 (November 17, 2019)
 
 * Possibility to generate password with custom char ranges
