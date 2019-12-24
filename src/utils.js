@@ -8,11 +8,24 @@ function isBrowser() {
   return global.hasOwnProperty('Window') && global instanceof global.Window;
 }
 
-function getRandomInt() {
+/**
+ * Returns 32bit random integer
+ * @return {Number}
+ */
+function getRandomUint32() {
+  if (this.prng) return this.prng.uint32();
   return isBrowser()
     ? crypto.getRandomValues(new Uint32Array(1))[0]
     : parseInt(crypto.randomBytes(4).toString('hex'), 16);
 }
+
+getRandomUint32.prototype.usePRNG = function (prng) {
+  this.prng = prng;
+};
+
+getRandomUint32.prototype.unusePRNG = function () {
+  this.prng = null;
+};
 
 /**
  * Returns random number
@@ -20,7 +33,7 @@ function getRandomInt() {
  * @return {Number} Random number
  */
 function random(diapason) {
-  const randomInt = getRandomInt();
+  const randomInt = getRandomUint32();
   const range = diapason[1] - diapason[0] + 1;
   return (randomInt >= Math.floor(4294967295 / range) * range) ? random(diapason) : diapason[0] + (randomInt % range);
 }
@@ -28,6 +41,7 @@ function random(diapason) {
 /**
  * Returns random item from array
  * @param {Array} arr
+ * @param {Function} prng PRND algorithm
  * @return {*} Random item
  */
 function randomItem(arr) {
@@ -120,12 +134,30 @@ function keys(obj) {
 }
 
 /**
- * Returns true ig the value is Integer
+ * Returns true ig the value is integer
  * @param {*} value
  * @return {Boolean}
  */
 function isInteger(value) {
   return Number.isInteger(value);
+}
+
+/**
+ * Returns true ig the value is number
+ * @param {*} value
+ * @return {Boolean}
+ */
+function isNumber(value) {
+  return typeof value === 'number' && isNaN(value) === false;
+}
+
+/**
+ * Returns true ig the value is string
+ * @param {*} value
+ * @return {Boolean}
+ */
+function isString(value) {
+  return typeof value === 'string';
 }
 
 /**
@@ -176,10 +208,11 @@ function numSequence(from, to, inclusive) {
  * @return {Array}
  */
 function shuffle(arr) {
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
-  }
+  if (arr.length <= 1) return arr;
+  timesMap(arr.length, (item, index) => {
+    const randomIndex = random([0, arr.length - 1]);
+    [arr[index], arr[randomIndex]] = [arr[randomIndex], arr[index]]
+  });
   return arr;
 }
 
@@ -211,9 +244,19 @@ function escapeRegExp(value) {
   return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
 }
 
+/**
+ * Pick values from array
+ * @param {Array} arr
+ * @param {Array} values
+ * @return {Array}
+ */
+function pick(arr, values) {
+  return arr.filter(item => values.includes(item));
+}
+
 module.exports = {
   isBrowser,
-  getRandomInt,
+  getRandomUint32,
   random,
   randomItem,
   without,
@@ -224,6 +267,8 @@ module.exports = {
   compact,
   keys,
   isInteger,
+  isNumber,
+  isString,
   isBoolean,
   isArray,
   isPlainObject,
