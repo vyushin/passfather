@@ -7,10 +7,10 @@
 ## Features
 
 * Support browsers and Node.js;
-* Optional random algorithmes such as Alea, KISS07, Kybos, LFib, LFIB4, MRG32k3a, Xorshift03. 
-By default using [window.crypto](https://developer.mozilla.org/ru/docs/Web/API/Window/crypto) for browsers and [crypto](https://nodejs.org/api/crypto.html) for Node.js;
+* Multiple random number algorithmes such as Alea, KISS07, Kybos, LFib, LFIB4, MRG32k3a, Xorshift03.
+By default using [getRandomValues](https://developer.mozilla.org/ru/docs/Web/API/RandomSource/getRandomValues) for browsers and [getRandomBytes](https://nodejs.org/api/crypto.html#crypto_crypto_randombytes_size_callback) for Node.js;
 * Support seed with entropy;
-* Optional using any of unicode chars. By default there are uppercase, lowercase, numbers and about ten symbols;
+* Optional using any of unicode chars (ranges). By default there are uppercase, lowercase, numbers and about ten symbols;
 * Any length;
 
 ## Installation
