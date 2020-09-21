@@ -1,9 +1,9 @@
-// From http://baagoe.com/en/RandomMusings/javascript/
+/*! From http://baagoe.com/en/RandomMusings/javascript/ */
 const Mash = require('./Mash');
 function Xorshift03() {
   return (function(args) {
-    // George Marsaglia, 13 May 2003
-    // http://groups.google.com/group/comp.lang.c/msg/e3c4ea1169e463ae
+    /*! George Marsaglia, 13 May 2003 */
+    /*! http://groups.google.com/group/comp.lang.c/msg/e3c4ea1169e463ae */
     var x = 123456789,
         y = 362436069,
         z = 521288629,

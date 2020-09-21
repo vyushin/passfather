@@ -1,31 +1,20 @@
-const crypto = isBrowser() ? global.crypto : eval('require("crypto")');
-
 /**
- * Returns true if the code runs in browser
- * @return {Boolean}
+ * Returns true if the code runs in Window
+ * @const
  */
-function isBrowser() {
-  return global.hasOwnProperty('Window') && global instanceof global.Window;
-}
+const hasWindow = typeof window !== 'undefined' && window.hasOwnProperty('Window') && window instanceof window.Window;
+const crypto = hasWindow ? window.crypto : eval(`require('crypto')`);
 
 /**
  * Returns 32bit random integer
  * @return {Number}
  */
 function getRandomUint32() {
-  if (this.prng) return this.prng.uint32();
-  return isBrowser()
+  if (getRandomUint32.prototype.prng) return getRandomUint32.prototype.prng.uint32();
+  return hasWindow
     ? crypto.getRandomValues(new Uint32Array(1))[0]
     : parseInt(crypto.randomBytes(4).toString('hex'), 16);
 }
-
-getRandomUint32.prototype.usePRNG = function (prng) {
-  this.prng = prng;
-};
-
-getRandomUint32.prototype.unusePRNG = function () {
-  this.prng = null;
-};
 
 /**
  * Returns random number
@@ -255,7 +244,7 @@ function pick(arr, values) {
 }
 
 module.exports = {
-  isBrowser,
+  hasWindow,
   getRandomUint32,
   random,
   randomItem,

@@ -21,6 +21,14 @@ By default using [getRandomValues](https://developer.mozilla.org/ru/docs/Web/API
 ###### Yarn
 `yarn add passfather`
 
+###### ESM
+```html
+<script type="module">
+    import passfather from 'https://unpkg.com/passfather/dist/passfather.min.mjs'
+    console.log( passfather() ); // Output "vFR_@1hDMhAr"
+</script>
+```
+
 ###### CDN
 
 ```html

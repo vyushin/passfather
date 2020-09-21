@@ -1,8 +1,8 @@
-// From http://baagoe.com/en/RandomMusings/javascript/
+/*! From http://baagoe.com/en/RandomMusings/javascript/ */
 const Mash = require('./Mash');
 function Alea() {
   return (function(args) {
-    // Johannes Baagøe <baagoe@baagoe.com>, 2010
+    /*! Johannes Baagøe <baagoe@baagoe.com>, 2010 */
     var s0 = 0;
     var s1 = 0;
     var s2 = 0;

@@ -1,9 +1,9 @@
-// From http://baagoe.com/en/RandomMusings/javascript/
+/*! From http://baagoe.com/en/RandomMusings/javascript/ */
 const Mash = require('./Mash');
 function MRG32k3a() {
   return (function(args) {
-    // Copyright (c) 1998, 2002 Pierre L'Ecuyer, DIRO, Université de Montréal.
-    // http://www.iro.umontreal.ca/~lecuyer/
+    /*! Copyright (c) 1998, 2002 Pierre L'Ecuyer, DIRO, Université de Montréal. */
+    /*! http://www.iro.umontreal.ca/~lecuyer/ */
     var m1 = 4294967087;
     var m2 = 4294944443;
     var s10 = 12345,
