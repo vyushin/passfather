@@ -1,7 +1,11 @@
 .idea/
+.github/
 node_modules/
 build/
 test/
+src/
 .internal/
 npm-debug.log
 package-lock.json
+CHANGELOG.md
+CONTRIBUTING.md

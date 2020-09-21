@@ -1,3 +1,10 @@
+## 2.1.0 (September 21, 2020)
+
+* Improve build
+* Add ESM support
+* Code refactoring
+* Other improvements
+
 ## 2.0.0 (December 25, 2019)
 
 * Add multiple pseudorandom number generators

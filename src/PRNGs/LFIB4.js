@@ -1,9 +1,9 @@
-// From http://baagoe.com/en/RandomMusings/javascript/
+/*! From http://baagoe.com/en/RandomMusings/javascript/ */
 const Mash = require('./Mash');
 function LFIB4() {
   return(function(args) {
-    // George Marsaglia's LFIB4,
-    //http://groups.google.com/group/sci.crypt/msg/eb4ddde782b17051
+    /*! George Marsaglia's LFIB4, */
+    /*! http://groups.google.com/group/sci.crypt/msg/eb4ddde782b17051 */
     var k0 = 0,
         k1 = 58,
         k2 = 119,

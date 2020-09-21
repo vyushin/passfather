@@ -1,7 +1,7 @@
 {
   "name": "passfather",
-  "version": "2.0.0",
-  "description": "passfather is very fast and powerful utility with zero dependencies to generate strong password",
+  "version": "2.1.0",
+  "description": "Passfather is very fast and powerful utility with zero dependencies to generate strong password",
   "author": "Evgeny Vyushin <e@vyushin.ru> (https://github.com/vyushin)",
   "contributors": [
     "Evgeny Vyushin <e@vyushin.ru> (https://github.com/vyushin)"
@@ -15,8 +15,8 @@
   },
   "scripts": {
     "install-all": "cd ./build && npm install && cd ../test && npm install",
-    "build:web": "cd ./build && npm run build:web",
-    "build:node": "cd ./build && npm run build:node",
+    "build:cdn": "cd ./build && npm run build:cdn",
+    "build:umd": "cd ./build && npm run build:umd",
     "build": "cd ./build && npm run build",
     "pretest": "npm run build",
     "test": "cd ./test && npm test",

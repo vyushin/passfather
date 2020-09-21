@@ -1,5 +1,5 @@
-// From http://baagoe.com/en/RandomMusings/javascript/
-// Johannes Baagøe <baagoe@baagoe.com>, 2010
+/*! From http://baagoe.com/en/RandomMusings/javascript/ */
+/*! Johannes Baagøe <baagoe@baagoe.com>, 2010 */
 function Mash() {
   var n = 0xefc8249d;
 

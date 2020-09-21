@@ -1,8 +1,8 @@
-// From http://baagoe.com/en/RandomMusings/javascript/
+/*! From http://baagoe.com/en/RandomMusings/javascript/ */
 const Mash = require('./Mash');
 function LFib() {
   return (function(args) {
-    // Johannes Baagøe <baagoe@baagoe.com>, 2010
+    /*! Johannes Baagøe <baagoe@baagoe.com>, 2010 */
     var k0 = 255,
         k1 = 52,
         k2 = 0;

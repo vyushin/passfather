@@ -1,4 +1,4 @@
-const { getRandomUint32, random, randomItem, compact, assign, timesMap, shuffle, isBrowser } = require('./utils');
+const { getRandomUint32, random, randomItem, compact, assign, timesMap, shuffle, hasWindow } = require('./utils');
 const PRNGs = require('./PRNGs');
 const { OPTION_VALIDATORS, ERROR_MESSAGES, DEFAULT_OPTIONS } = require('./validatingOptions');
 const { DEFAULT_BROWSER_SEED, DEFAULT_NODE_SEED } = require('./seed');
@@ -42,11 +42,11 @@ function passfather(options) {
   }
 
   const opts = assign({}, DEFAULT_OPTIONS, options);
-  const seed = opts.seed || isBrowser() ? shuffle(DEFAULT_BROWSER_SEED) : shuffle(DEFAULT_NODE_SEED);
+  const seed = opts.seed || hasWindow ? shuffle(DEFAULT_BROWSER_SEED) : shuffle(DEFAULT_NODE_SEED);
   const prng = opts.prng !== 'default' ? new PRNGs[opts.prng](seed) : null;
   const charRanges = getCharRanges(opts);
 
-  prng ? getRandomUint32.prototype.usePRNG(prng) : getRandomUint32.prototype.unusePRNG();
+  prng ? getRandomUint32.prototype.prng = prng : getRandomUint32.prototype.prng = null;
 
   const requiredChars = timesMap(charRanges.length, (item, index) => {
     return String.fromCharCode(random(randomItem(charRanges[index])));

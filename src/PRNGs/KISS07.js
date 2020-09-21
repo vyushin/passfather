@@ -1,9 +1,9 @@
-// From http://baagoe.com/en/RandomMusings/javascript/
+/*! From http://baagoe.com/en/RandomMusings/javascript/ */
 const Mash = require('./Mash');
 function KISS07() {
   return (function(args) {
-    // George Marsaglia, 2007-06-23
-    //http://groups.google.com/group/comp.lang.fortran/msg/6edb8ad6ec5421a5
+    /*! George Marsaglia, 2007-06-23 */
+    /*! http://groups.google.com/group/comp.lang.fortran/msg/6edb8ad6ec5421a5 */
     var x = 123456789;
     var y = 362436069;
     var z =  21288629;
