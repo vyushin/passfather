@@ -1,3 +1,8 @@
+## 2.1.1 (September 21, 2020)
+
+* Add semver to unpkg links
+* Add module property to package.json
+
 ## 2.1.0 (September 21, 2020)
 
 * Improve build
