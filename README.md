@@ -24,7 +24,7 @@ By default using [getRandomValues](https://developer.mozilla.org/ru/docs/Web/API
 ###### ESM
 ```html
 <script type="module">
-    import passfather from 'https://unpkg.com/passfather/dist/passfather.min.mjs'
+    import passfather from 'https://unpkg.com/passfather@^2.1.1/dist/passfather.min.mjs'
     console.log( passfather() ); // Output "vFR_@1hDMhAr"
 </script>
 ```
@@ -32,7 +32,7 @@ By default using [getRandomValues](https://developer.mozilla.org/ru/docs/Web/API
 ###### CDN
 
 ```html
-<script src="https://unpkg.com/passfather/dist/passfather.min.js"></script>
+<script src="https://unpkg.com/passfather@^2.1.1/dist/passfather.min.js"></script>
 <script>
     console.log( passfather() ); // Output "r_@1hDvFRMhA"
 </script>
