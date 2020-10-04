@@ -2,13 +2,15 @@ const { merge } = require('webpack-merge');
 const { resolve } = require('path');
 const { BannerPlugin } = require('webpack');
 const { SRC_DIR, DIST_DIR, BANNER } = require('./constants');
+const ARGV = process.argv;
+const USE_MJS_OUTPUT = ARGV.some(x => x === '--use-mjs-output');
 
 const webpackModuleConfig = {
   entry: {
     passfather: resolve(SRC_DIR, '../src/index.js'),
   },
   output: {
-    filename: '[name].mjs',
+    filename: USE_MJS_OUTPUT ? '[name].mjs' : '[name].esm.js',
     path: DIST_DIR,
     module: true,
   },
@@ -65,7 +67,7 @@ const webpackModuleMinConfig = merge(
   webpackModuleConfig,
   {
     output: {
-      filename: '[name].min.mjs',
+      filename: USE_MJS_OUTPUT ? '[name].min.mjs' : '[name].esm.min.js',
     },
     optimization: {
       minimize: true,

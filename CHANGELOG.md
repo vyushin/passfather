@@ -1,3 +1,6 @@
+## 2.1.2 (October 04, 2020)
+* Add .esm.js bundle to module of package.json (instead .mjs) for more compatibility
+
 ## 2.1.1 (September 21, 2020)
 
 * Add semver to unpkg links
