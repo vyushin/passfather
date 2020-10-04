@@ -1,6 +1,7 @@
 const { merge } = require('webpack-merge');
 const { resolve } = require('path');
 const { BannerPlugin } = require('webpack');
+const CopyPlugin = require('copy-webpack-plugin');
 const { SRC_DIR, DIST_DIR, BANNER } = require('./constants');
 
 const webpackCommonConfig = {
@@ -51,6 +52,11 @@ const webpackUmdConfig = merge([
     optimization: {
       minimize: false,
     },
+    plugins: [
+      new CopyPlugin([
+        { from: resolve(SRC_DIR, './index.d.ts'), to: resolve(DIST_DIR, './passfather.d.ts') },
+      ]),
+    ],
   },
 ]);
 

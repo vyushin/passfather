@@ -1,5 +1,5 @@
 /*!
- * @file passfather.js
+ * @file passfather.esm.js
  * @version 2.1.3
  * @description Passfather is very fast and powerful utility with zero dependencies to generate strong password
  * @copyright Copyright (c) 2019-present, Evgeny Vyushin <e@vyushin.ru> (https://github.com/vyushin)
@@ -7,18 +7,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file on https://github.com/vyushin/passfather/blob/master/LICENSE
  */
-(function webpackUniversalModuleDefinition(root, factory) {
-	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory();
-	else if(typeof define === 'function' && define.amd)
-		define("passfather", [], factory);
-	else if(typeof exports === 'object')
-		exports["passfather"] = factory();
-	else
-		root["passfather"] = factory();
-})(this, function() {
-return /******/ (() => { // webpackBootstrap
-/******/ 	var __webpack_modules__ = ({
+/******/ var __webpack_modules__ = ({
 
 /***/ 544:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
@@ -658,13 +647,13 @@ var MRG32k3a = __webpack_require__(759);
 var Xorshift03 = __webpack_require__(779);
 
 module.exports = {
-  Alea,
-  KISS07,
-  Kybos,
-  LFib,
-  LFIB4,
-  MRG32k3a,
-  Xorshift03
+  Alea: Alea,
+  KISS07: KISS07,
+  Kybos: Kybos,
+  LFib: LFib,
+  LFIB4: LFIB4,
+  MRG32k3a: MRG32k3a,
+  Xorshift03: Xorshift03
 };
 
 /***/ }),
@@ -755,10 +744,10 @@ function passfather(options) {
 }
 
 module.exports = {
-  passfather,
-  DEFAULT_OPTIONS,
-  CHAR_RANGES,
-  ERROR_MESSAGES
+  passfather: passfather,
+  DEFAULT_OPTIONS: DEFAULT_OPTIONS,
+  CHAR_RANGES: CHAR_RANGES,
+  ERROR_MESSAGES: ERROR_MESSAGES
 };
 
 /***/ }),
@@ -770,7 +759,7 @@ var _require = __webpack_require__(599),
     compact = _require.compact,
     hasWindow = _require.hasWindow;
 
-var os = hasWindow ? {} : eval(`require('os')`);
+var os = hasWindow ? {} : eval("require('os')");
 /**
  * Default seed for prng
  * @const
@@ -784,8 +773,8 @@ var DEFAULT_NODE_SEED = !hasWindow ? compact([].concat(Date.now(), process.memor
 
 var DEFAULT_BROWSER_SEED = hasWindow ? compact([].concat(Date.now(), performance && performance.memory ? [performance.memory.totalJSHeapSize, performance.memory.usedJSHeapSize] : null, navigator ? [navigator.userAgent, navigator.appVersion, navigator.hardwareConcurrency, navigator.deviceMemory] : null)) : null;
 module.exports = {
-  DEFAULT_NODE_SEED,
-  DEFAULT_BROWSER_SEED
+  DEFAULT_NODE_SEED: DEFAULT_NODE_SEED,
+  DEFAULT_BROWSER_SEED: DEFAULT_BROWSER_SEED
 };
 
 /***/ }),
@@ -798,7 +787,7 @@ module.exports = {
  * @const
  */
 var hasWindow = typeof window !== 'undefined' && window.hasOwnProperty('Window') && window instanceof window.Window;
-var crypto = hasWindow ? window.crypto : eval(`require('crypto')`);
+var crypto = hasWindow ? window.crypto : eval("require('crypto')");
 /**
  * Returns 32bit random integer
  * @return {Number}
@@ -1076,30 +1065,30 @@ function pick(arr, values) {
 }
 
 module.exports = {
-  hasWindow,
-  getRandomUint32,
-  random,
-  randomItem,
-  without,
-  includes,
-  includesAll,
-  excludes,
-  lastIndex,
-  compact,
-  keys,
-  isInteger,
-  isNumber,
-  isString,
-  isBoolean,
-  isArray,
-  isPlainObject,
-  assign,
-  timesMap,
-  numSequence,
-  shuffle,
-  getCharsByDiapason,
-  isCharCode,
-  escapeRegExp
+  hasWindow: hasWindow,
+  getRandomUint32: getRandomUint32,
+  random: random,
+  randomItem: randomItem,
+  without: without,
+  includes: includes,
+  includesAll: includesAll,
+  excludes: excludes,
+  lastIndex: lastIndex,
+  compact: compact,
+  keys: keys,
+  isInteger: isInteger,
+  isNumber: isNumber,
+  isString: isString,
+  isBoolean: isBoolean,
+  isArray: isArray,
+  isPlainObject: isPlainObject,
+  assign: assign,
+  timesMap: timesMap,
+  numSequence: numSequence,
+  shuffle: shuffle,
+  getCharsByDiapason: getCharsByDiapason,
+  isCharCode: isCharCode,
+  escapeRegExp: escapeRegExp
 };
 
 /***/ }),
@@ -1189,7 +1178,7 @@ var OPTION_VALIDATORS = {
    * @param {Object} options
    * @return {Number} Error code or 0 if validation passed
    */
-  completely(options) {
+  completely: function completely(options) {
     var _this = this;
 
     var cases = [// [IMPORTANT] Order is important, because index of case matches with error code
@@ -1228,7 +1217,6 @@ var OPTION_VALIDATORS = {
       return item() === false;
     });
   }
-
 };
 /**
  * Error messages by error code.
@@ -1237,57 +1225,54 @@ var OPTION_VALIDATORS = {
 
 var ERROR_MESSAGES = [];
 ERROR_MESSAGES[0] = 'No errors';
-ERROR_MESSAGES[1] = `[${MODULE_NAME}]: Option must be an object`;
-ERROR_MESSAGES[2] = `[${MODULE_NAME}]: Options must contains only one (or several) of [${keys(DEFAULT_OPTIONS).join(', ')}]`;
-ERROR_MESSAGES[3] = `[${MODULE_NAME}]: Option "ranges" must be array with array of UTF-8 char code range. For example: [ [[48, 57 ]], [[33, 46], [58, 64], [94, 96], [123, 126]] ] `;
-ERROR_MESSAGES[4] = `[${MODULE_NAME}]: Option "numbers" must be boolean`;
-ERROR_MESSAGES[5] = `[${MODULE_NAME}]: Option "uppercase" must be boolean`;
-ERROR_MESSAGES[6] = `[${MODULE_NAME}]: Option "lowercase" must be boolean`;
-ERROR_MESSAGES[7] = `[${MODULE_NAME}]: Option "symbols" must be boolean`;
-ERROR_MESSAGES[8] = `[${MODULE_NAME}]: Option "length" must be integer greater than 0`;
-ERROR_MESSAGES[9] = `[${MODULE_NAME}]: Option "prng" must be one of [${['default'].concat(keys(PRNGs)).join(', ')}]`;
-ERROR_MESSAGES[10] = `[${MODULE_NAME}]: Option "seed" must be array of strings or numbers`;
-ERROR_MESSAGES[11] = `[${MODULE_NAME}]: At less one of options [${without(keys(DEFAULT_OPTIONS), ['length', 'prng', 'seed']).join(', ')}] mustn't be false`;
-ERROR_MESSAGES[12] = `[${MODULE_NAME}]: Option "seed" cannot be used when "prng" option is default. Set "prng" option to one  of [${keys(PRNGs).join(', ')}]`;
+ERROR_MESSAGES[1] = "[".concat(MODULE_NAME, "]: Option must be an object");
+ERROR_MESSAGES[2] = "[".concat(MODULE_NAME, "]: Options must contains only one (or several) of [").concat(keys(DEFAULT_OPTIONS).join(', '), "]");
+ERROR_MESSAGES[3] = "[".concat(MODULE_NAME, "]: Option \"ranges\" must be array with array of UTF-8 char code range. For example: [ [[48, 57 ]], [[33, 46], [58, 64], [94, 96], [123, 126]] ] ");
+ERROR_MESSAGES[4] = "[".concat(MODULE_NAME, "]: Option \"numbers\" must be boolean");
+ERROR_MESSAGES[5] = "[".concat(MODULE_NAME, "]: Option \"uppercase\" must be boolean");
+ERROR_MESSAGES[6] = "[".concat(MODULE_NAME, "]: Option \"lowercase\" must be boolean");
+ERROR_MESSAGES[7] = "[".concat(MODULE_NAME, "]: Option \"symbols\" must be boolean");
+ERROR_MESSAGES[8] = "[".concat(MODULE_NAME, "]: Option \"length\" must be integer greater than 0");
+ERROR_MESSAGES[9] = "[".concat(MODULE_NAME, "]: Option \"prng\" must be one of [").concat(['default'].concat(keys(PRNGs)).join(', '), "]");
+ERROR_MESSAGES[10] = "[".concat(MODULE_NAME, "]: Option \"seed\" must be array of strings or numbers");
+ERROR_MESSAGES[11] = "[".concat(MODULE_NAME, "]: At less one of options [").concat(without(keys(DEFAULT_OPTIONS), ['length', 'prng', 'seed']).join(', '), "] mustn't be false");
+ERROR_MESSAGES[12] = "[".concat(MODULE_NAME, "]: Option \"seed\" cannot be used when \"prng\" option is default. Set \"prng\" option to one  of [").concat(keys(PRNGs).join(', '), "]");
 module.exports = {
-  OPTION_VALIDATORS,
-  ERROR_MESSAGES,
-  MODULE_NAME,
-  DEFAULT_OPTIONS
+  OPTION_VALIDATORS: OPTION_VALIDATORS,
+  ERROR_MESSAGES: ERROR_MESSAGES,
+  MODULE_NAME: MODULE_NAME,
+  DEFAULT_OPTIONS: DEFAULT_OPTIONS
 };
 
 /***/ })
 
-/******/ 	});
+/******/ });
 /************************************************************************/
-/******/ 	// The module cache
-/******/ 	var __webpack_module_cache__ = {};
-/******/ 	
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/ 		// Check if module is in cache
-/******/ 		if(__webpack_module_cache__[moduleId]) {
-/******/ 			return __webpack_module_cache__[moduleId].exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = __webpack_module_cache__[moduleId] = {
-/******/ 			// no module.id needed
-/******/ 			// no module.loaded needed
-/******/ 			exports: {}
-/******/ 		};
-/******/ 	
-/******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
-/******/ 	
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
+/******/ // The module cache
+/******/ var __webpack_module_cache__ = {};
+/******/ 
+/******/ // The require function
+/******/ function __webpack_require__(moduleId) {
+/******/ 	// Check if module is in cache
+/******/ 	if(__webpack_module_cache__[moduleId]) {
+/******/ 		return __webpack_module_cache__[moduleId].exports;
 /******/ 	}
-/******/ 	
+/******/ 	// Create a new module (and put it into the cache)
+/******/ 	var module = __webpack_module_cache__[moduleId] = {
+/******/ 		// no module.id needed
+/******/ 		// no module.loaded needed
+/******/ 		exports: {}
+/******/ 	};
+/******/ 
+/******/ 	// Execute the module function
+/******/ 	__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 
+/******/ 	// Return the exports of the module
+/******/ 	return module.exports;
+/******/ }
+/******/ 
 /************************************************************************/
-/******/ 	// module exports must be returned from runtime so entry inlining is disabled
-/******/ 	// startup
-/******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(670);
-/******/ })()
-;
-});
+/******/ // startup
+/******/ // Load entry module
+/******/ // This entry module is referenced by other modules so it can't be inlined
+/******/ ;export default __webpack_require__(670);
