@@ -1,6 +1,6 @@
 /*!
  * @file passfather.mjs
- * @version 2.1.0
+ * @version 2.1.2
  * @description Passfather is very fast and powerful utility with zero dependencies to generate strong password
  * @copyright Copyright (c) 2019-present, Evgeny Vyushin <e@vyushin.ru> (https://github.com/vyushin)
  * @license

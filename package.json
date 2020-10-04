@@ -1,6 +1,6 @@
 {
   "name": "passfather",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "Passfather is very fast and powerful utility with zero dependencies to generate strong password",
   "author": "Evgeny Vyushin <e@vyushin.ru> (https://github.com/vyushin)",
   "contributors": [
@@ -27,7 +27,7 @@
   },
   "homepage": "https://github.com/vyushin/passfather",
   "main": "./dist/passfather.js",
-  "module": "./dist/passfather.min.mjs",
+  "module": "./dist/passfather.esm.js",
   "types": "./dist/passfather.d.ts",
   "license": "MIT",
   "keywords": [

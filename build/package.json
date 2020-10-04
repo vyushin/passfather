@@ -16,9 +16,9 @@
   },
   "scripts": {
     "build:umd": "webpack --mode production --config webpack.umd.config.js",
-    "build:mjs": "webpack --mode production --config webpack.mjs.config.js",
+    "build:esm": "webpack --mode production --config webpack.esm.config.js",
     "prebuild": "rm -rf ../dist",
-    "build": "npm run build:umd & npm run build:mjs"
+    "build": "npm run build:umd & npm run build:esm & npm run build:esm -- --use-mjs-output"
   },
   "bugs": {
     "url": "https://github.com/vyushin/passfather/issues"
