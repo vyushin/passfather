@@ -5,6 +5,7 @@ build/
 test/
 src/
 .internal/
+example/
 npm-debug.log
 package-lock.json
 CHANGELOG.md

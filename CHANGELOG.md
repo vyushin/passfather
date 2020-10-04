@@ -1,3 +1,6 @@
+## 2.1.3 (October 04, 2020)
+* Add missing typescript declaration in dist directory
+
 ## 2.1.2 (October 04, 2020)
 * Add .esm.js bundle to module of package.json (instead .mjs) for more compatibility
 
