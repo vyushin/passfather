@@ -4,6 +4,14 @@
 
 **passfather** is very fast and powerful utility with zero dependencies to generate strong password or random string.
 
+## Table of contents
+* [Features](#features)
+* [Installation](#installation)
+* [Example](#example)
+* [Options](#options)
+* [Contributing](#contributing)
+* [Licence](#license)
+
 ## Features
 
 * Support browsers and Node.js;
