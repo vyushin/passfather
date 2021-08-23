@@ -1,7 +1,10 @@
-const { getRandomUint32, random, randomItem, compact, assign, timesMap, shuffle, hasWindow } = require('./utils');
-const PRNGs = require('./PRNGs');
+const { compact, assign, timesMap, hasWindow, ...utils } = require('./utils');
 const { OPTION_VALIDATORS, ERROR_MESSAGES, DEFAULT_OPTIONS } = require('./validatingOptions');
 const { DEFAULT_BROWSER_SEED, DEFAULT_NODE_SEED } = require('./seed');
+
+const _random = utils.random;
+const _randomItem = utils.randomItem;
+const _shuffle = utils.shuffle;
 
 /**
  * UTF-8 char diapasons
@@ -21,12 +24,20 @@ const CHAR_RANGES = [
  */
 function getCharRanges(options) {
   return compact([].concat(
-    options.numbers   && [CHAR_RANGES[0]],
+    options.numbers && [CHAR_RANGES[0]],
     options.uppercase && [CHAR_RANGES[1]],
     options.lowercase && [CHAR_RANGES[2]],
-    options.symbols   && [CHAR_RANGES[3]],
-    options.ranges    && options.ranges,
+    options.symbols && [CHAR_RANGES[3]],
+    options.ranges && options.ranges,
   ));
+}
+
+function getEnvironmentSeed({ seed }) {
+  const hasSeed = Boolean(seed);
+  if (hasWindow()) {
+    return hasSeed ? seed : DEFAULT_BROWSER_SEED;
+  }
+  return hasSeed ? seed : DEFAULT_NODE_SEED;
 }
 
 /**
@@ -41,12 +52,24 @@ function passfather(options) {
     throw ERROR_MESSAGES[errorCode];
   }
 
-  const opts = assign({}, DEFAULT_OPTIONS, options);
-  const seed = opts.seed || hasWindow ? shuffle(DEFAULT_BROWSER_SEED) : shuffle(DEFAULT_NODE_SEED);
-  const prng = opts.prng !== 'default' ? new PRNGs[opts.prng](seed) : null;
-  const charRanges = getCharRanges(opts);
+  const opts = assign({}, DEFAULT_OPTIONS, options, passfather.prototype._dev.options);
 
-  prng ? getRandomUint32.prototype.prng = prng : getRandomUint32.prototype.prng = null;
+  const shuffle = (arr) => {
+    const seed = _shuffle(getEnvironmentSeed(opts));
+    return _shuffle(arr, opts.prng, seed);
+  };
+
+  const random = (diapason) => {
+    const seed = _shuffle(getEnvironmentSeed(opts));
+    return _random(diapason, opts.prng, _shuffle(seed));
+  };
+
+  const randomItem = (arr) => {
+    const seed = _shuffle(getEnvironmentSeed(opts));
+    return _randomItem(arr, opts.prng, _shuffle(seed));
+  };
+
+  const charRanges = getCharRanges(opts);
 
   const requiredChars = timesMap(charRanges.length, (item, index) => {
     return String.fromCharCode(random(randomItem(charRanges[index])));
@@ -60,6 +83,10 @@ function passfather(options) {
     return String.fromCharCode(random(randomItem(randomItem(charRanges))));
   }).concat(requiredChars)).join('');
 }
+
+passfather.prototype._dev = {
+  options: {},
+};
 
 module.exports = {
   passfather,

@@ -1,17 +1,36 @@
+const PRNGs = require('./PRNGs');
+const PRNGKeys = new Set(Object.keys(PRNGs));
+
 /**
  * Returns true if the code runs in Window
- * @const
+ * @return {Boolaen}
  */
-const hasWindow = typeof window !== 'undefined' && window.hasOwnProperty('Window') && window instanceof window.Window;
-const crypto = hasWindow ? window.crypto : eval(`require('crypto')`);
+function hasWindow() {
+  return typeof window !== 'undefined' && window.hasOwnProperty('Window') && window instanceof window.Window;
+}
+
+/**
+ * Returns crypto module for this environment
+ */
+function getCrypto() {
+  return hasWindow() ? window.crypto : eval(`require('crypto')`);
+}
 
 /**
  * Returns 32bit random integer
+ * @param { String } prng Password random number generator
+ * @param { Array } seed Seed
  * @return {Number}
  */
-function getRandomUint32() {
-  if (getRandomUint32.prototype.prng) return getRandomUint32.prototype.prng.uint32();
-  return hasWindow
+function getRandomUint32(prng, seed) {
+  const hasPRNG = PRNGKeys.has(prng);
+  prng && prng !== 'default' && !hasPRNG && console.warn(`PRNG ${prng} is not supported`);
+  if (prng && prng !== 'default' && PRNGKeys.has(prng)) {
+    const prngFn = seed ? new PRNGs[prng](seed) : new PRNGs[prng]();
+    return prngFn.uint32();
+  }
+  const crypto = getCrypto();
+  return hasWindow()
     ? crypto.getRandomValues(new Uint32Array(1))[0]
     : parseInt(crypto.randomBytes(4).toString('hex'), 16);
 }
@@ -19,10 +38,12 @@ function getRandomUint32() {
 /**
  * Returns random number
  * @param {[Number, Number]} diapason [min, max]
+ * @param { String } prng Password random number generator
+ * @param { Array } seed Seed
  * @return {Number} Random number
  */
-function random(diapason) {
-  const randomInt = getRandomUint32();
+function random(diapason, prng, seed) {
+  const randomInt = getRandomUint32(prng, seed);
   const range = diapason[1] - diapason[0] + 1;
   return (randomInt >= Math.floor(4294967295 / range) * range) ? random(diapason) : diapason[0] + (randomInt % range);
 }
@@ -30,11 +51,12 @@ function random(diapason) {
 /**
  * Returns random item from array
  * @param {Array} arr
- * @param {Function} prng PRND algorithm
+ * @param {Function} prng Password random number generator
+ * @param { Array } seed Seed
  * @return {*} Random item
  */
-function randomItem(arr) {
-  return arr[random([0, arr.length - 1])];
+function randomItem(arr, prng, seed) {
+  return arr[random([0, arr.length - 1], prng, seed)];
 }
 
 /**
@@ -196,11 +218,11 @@ function numSequence(from, to, inclusive) {
  * @param {Array} arr
  * @return {Array}
  */
-function shuffle(arr) {
+function shuffle(arr, prng, seed) {
   if (arr.length <= 1) return arr;
   timesMap(arr.length, (item, index) => {
-    const randomIndex = random([0, arr.length - 1]);
-    [arr[index], arr[randomIndex]] = [arr[randomIndex], arr[index]]
+    const randomIndex = random([0, arr.length - 1], prng, seed);
+    [arr[index], arr[randomIndex]] = [arr[randomIndex], arr[index]];
   });
   return arr;
 }
