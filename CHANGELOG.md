@@ -1,3 +1,6 @@
+## 3.0.1 (August 24, 2021)
+* Update README.md
+
 ## 3.0.0 (August 23, 2021)
 * Improve PRNG algorithm
 * Make new test for each of PRNG algorithm
