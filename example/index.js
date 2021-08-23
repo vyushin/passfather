@@ -2,17 +2,19 @@
  * Some examples
  */
 
-const passfather = require('../dist/passfather');
+const passfather = require('../src');
+const utils = require('../src/utils');
+console.time('Timer');
+let result = '';
+for (let i = 0; i < 0; i++) {
+  const passwordWithCustomChars = passfather({
+    prng: 'Alea',
+  });
 
-const passwordWithCustomChars = passfather({
-  // number, uppercase, lowercase or symbols enabled by default so we just don't pass them.
-  length: 16,
-  ranges: [
-    [[9800, 9807]], // Group of char range. Zodiac signs
-    [[9818, 9823]], // Group of char range. Chess figures.
-    [[9698, 9701], [9606, 9611]], // Group of char range. Geometric figures
-  ],
-  prng: 'Kybos'
-});
+  const n = utils.getRandomUint32('Alea') + ' ' + utils.getRandomUint32('Alea');
+  result += n + '\n';
+  // result += passwordWithCustomChars + '\n';
+}
 
-console.log(passwordWithCustomChars);
+console.log(result);
+console.timeEnd('Timer');

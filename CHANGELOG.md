@@ -1,3 +1,8 @@
+## 3.0.0 (August 23, 2021)
+* Improve PRNG algorithm
+* Make new test for each of PRNG algorithm
+* Memoize option validation result, up performance
+
 ## 2.1.3 (October 04, 2020)
 * Add missing typescript declaration in dist directory
 

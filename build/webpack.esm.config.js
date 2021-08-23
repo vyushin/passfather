@@ -44,7 +44,7 @@ const webpackModuleConfig = {
     {
       apply(compiler) {
         compiler.hooks.compilation.tap('passfather', (compilation) => {
-          compilation.hooks.afterProcessAssets.tap('passfather',(assets) => {
+          compilation.hooks.afterProcessAssets.tap('passfather', (assets) => {
             const assetKey = Object.keys(assets)[0];
             const assetSource = assets[assetKey].source();
             const processedSource = assetSource.replace(/(__webpack_require__\([0-9]+?\);\s*)$/, ';export default $1');
@@ -55,9 +55,9 @@ const webpackModuleConfig = {
               size() {
                 return Buffer.byteLength(processedSource);
               }
-            }
+            };
           });
-        })
+        });
       }
     }
   ]
@@ -73,6 +73,6 @@ const webpackModuleMinConfig = merge(
       minimize: true,
     },
   }
-)
+);
 
 module.exports = [webpackModuleConfig, webpackModuleMinConfig];

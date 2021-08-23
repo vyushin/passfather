@@ -1,6 +1,6 @@
 /*!
  * @file passfather.js
- * @version 2.1.3
+ * @version 3.0.0
  * @description Passfather is very fast and powerful utility with zero dependencies to generate strong password
  * @copyright Copyright (c) 2019-present, Evgeny Vyushin <e@vyushin.ru> (https://github.com/vyushin)
  * @license
@@ -682,17 +682,16 @@ module.exports = passfather;
 /***/ 344:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
+function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
+
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
 var _require = __webpack_require__(599),
-    getRandomUint32 = _require.getRandomUint32,
-    random = _require.random,
-    randomItem = _require.randomItem,
     compact = _require.compact,
     assign = _require.assign,
     timesMap = _require.timesMap,
-    shuffle = _require.shuffle,
-    hasWindow = _require.hasWindow;
-
-var PRNGs = __webpack_require__(664);
+    hasWindow = _require.hasWindow,
+    utils = _objectWithoutProperties(_require, ["compact", "assign", "timesMap", "hasWindow"]);
 
 var _require2 = __webpack_require__(852),
     OPTION_VALIDATORS = _require2.OPTION_VALIDATORS,
@@ -702,11 +701,14 @@ var _require2 = __webpack_require__(852),
 var _require3 = __webpack_require__(680),
     DEFAULT_BROWSER_SEED = _require3.DEFAULT_BROWSER_SEED,
     DEFAULT_NODE_SEED = _require3.DEFAULT_NODE_SEED;
+
+var _random = utils.random;
+var _randomItem = utils.randomItem;
+var _shuffle = utils.shuffle;
 /**
  * UTF-8 char diapasons
  * @const
  */
-
 
 var CHAR_RANGES = [[[48, 57]], // Numbers
 [[65, 90]], // Uppercase
@@ -722,6 +724,17 @@ var CHAR_RANGES = [[[48, 57]], // Numbers
 function getCharRanges(options) {
   return compact([].concat(options.numbers && [CHAR_RANGES[0]], options.uppercase && [CHAR_RANGES[1]], options.lowercase && [CHAR_RANGES[2]], options.symbols && [CHAR_RANGES[3]], options.ranges && options.ranges));
 }
+
+function getEnvironmentSeed(_ref) {
+  var seed = _ref.seed;
+  var hasSeed = Boolean(seed);
+
+  if (hasWindow()) {
+    return hasSeed ? seed : DEFAULT_BROWSER_SEED;
+  }
+
+  return hasSeed ? seed : DEFAULT_NODE_SEED;
+}
 /**
  * Generate password
  * @param {Object} options
@@ -736,11 +749,27 @@ function passfather(options) {
     throw ERROR_MESSAGES[errorCode];
   }
 
-  var opts = assign({}, DEFAULT_OPTIONS, options);
-  var seed = opts.seed || hasWindow ? shuffle(DEFAULT_BROWSER_SEED) : shuffle(DEFAULT_NODE_SEED);
-  var prng = opts.prng !== 'default' ? new PRNGs[opts.prng](seed) : null;
+  var opts = assign({}, DEFAULT_OPTIONS, options, passfather.prototype._dev.options);
+
+  var shuffle = function shuffle(arr) {
+    var seed = _shuffle(getEnvironmentSeed(opts));
+
+    return _shuffle(arr, opts.prng, seed);
+  };
+
+  var random = function random(diapason) {
+    var seed = _shuffle(getEnvironmentSeed(opts));
+
+    return _random(diapason, opts.prng, _shuffle(seed));
+  };
+
+  var randomItem = function randomItem(arr) {
+    var seed = _shuffle(getEnvironmentSeed(opts));
+
+    return _randomItem(arr, opts.prng, _shuffle(seed));
+  };
+
   var charRanges = getCharRanges(opts);
-  prng ? getRandomUint32.prototype.prng = prng : getRandomUint32.prototype.prng = null;
   var requiredChars = timesMap(charRanges.length, function (item, index) {
     return String.fromCharCode(random(randomItem(charRanges[index])));
   });
@@ -754,6 +783,9 @@ function passfather(options) {
   }).concat(requiredChars)).join('');
 }
 
+passfather.prototype._dev = {
+  options: {}
+};
 module.exports = {
   passfather,
   DEFAULT_OPTIONS,
@@ -770,19 +802,19 @@ var _require = __webpack_require__(599),
     compact = _require.compact,
     hasWindow = _require.hasWindow;
 
-var os = hasWindow ? {} : eval(`require('os')`);
+var os = hasWindow() ? {} : eval(`require('os')`);
 /**
  * Default seed for prng
  * @const
  */
 
-var DEFAULT_NODE_SEED = !hasWindow ? compact([].concat(Date.now(), process.memoryUsage ? [process.memoryUsage().heapTotal, process.memoryUsage().heapUsed] : null, process.env ? [process.arch, process.platform, os.cpus().length, os.totalmem()] : null)) : null;
+var DEFAULT_NODE_SEED = !hasWindow() ? compact([].concat(Date.now(), process.memoryUsage ? [process.memoryUsage().heapTotal, process.memoryUsage().heapUsed] : null, process.env ? [process.arch, process.platform, os.cpus().length, os.totalmem()] : null)) : null;
 /**
  * Default seed for prng
  * @const
  */
 
-var DEFAULT_BROWSER_SEED = hasWindow ? compact([].concat(Date.now(), performance && performance.memory ? [performance.memory.totalJSHeapSize, performance.memory.usedJSHeapSize] : null, navigator ? [navigator.userAgent, navigator.appVersion, navigator.hardwareConcurrency, navigator.deviceMemory] : null)) : null;
+var DEFAULT_BROWSER_SEED = hasWindow() ? compact([].concat(Date.now(), performance && performance.memory ? [performance.memory.totalJSHeapSize, performance.memory.usedJSHeapSize] : null, navigator ? [navigator.userAgent, navigator.appVersion, navigator.hardwareConcurrency, navigator.deviceMemory] : null)) : null;
 module.exports = {
   DEFAULT_NODE_SEED,
   DEFAULT_BROWSER_SEED
@@ -791,45 +823,72 @@ module.exports = {
 /***/ }),
 
 /***/ 599:
-/***/ ((module) => {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
+var PRNGs = __webpack_require__(664);
+
+var PRNGKeys = new Set(Object.keys(PRNGs));
 /**
  * Returns true if the code runs in Window
- * @const
+ * @return {Boolaen}
  */
-var hasWindow = typeof window !== 'undefined' && window.hasOwnProperty('Window') && window instanceof window.Window;
-var crypto = hasWindow ? window.crypto : eval(`require('crypto')`);
+
+function hasWindow() {
+  return typeof window !== 'undefined' && window.hasOwnProperty('Window') && window instanceof window.Window;
+}
+/**
+ * Returns crypto module for this environment
+ */
+
+
+function getCrypto() {
+  return hasWindow() ? window.crypto : eval(`require('crypto')`);
+}
 /**
  * Returns 32bit random integer
+ * @param { String } prng Password random number generator
+ * @param { Array } seed Seed
  * @return {Number}
  */
 
-function getRandomUint32() {
-  if (getRandomUint32.prototype.prng) return getRandomUint32.prototype.prng.uint32();
-  return hasWindow ? crypto.getRandomValues(new Uint32Array(1))[0] : parseInt(crypto.randomBytes(4).toString('hex'), 16);
+
+function getRandomUint32(prng, seed) {
+  var hasPRNG = PRNGKeys.has(prng);
+  prng && prng !== 'default' && !hasPRNG && console.warn(`PRNG ${prng} is not supported`);
+
+  if (prng && prng !== 'default' && PRNGKeys.has(prng)) {
+    var prngFn = seed ? new PRNGs[prng](seed) : new PRNGs[prng]();
+    return prngFn.uint32();
+  }
+
+  var crypto = getCrypto();
+  return hasWindow() ? crypto.getRandomValues(new Uint32Array(1))[0] : parseInt(crypto.randomBytes(4).toString('hex'), 16);
 }
 /**
  * Returns random number
  * @param {[Number, Number]} diapason [min, max]
+ * @param { String } prng Password random number generator
+ * @param { Array } seed Seed
  * @return {Number} Random number
  */
 
 
-function random(diapason) {
-  var randomInt = getRandomUint32();
+function random(diapason, prng, seed) {
+  var randomInt = getRandomUint32(prng, seed);
   var range = diapason[1] - diapason[0] + 1;
   return randomInt >= Math.floor(4294967295 / range) * range ? random(diapason) : diapason[0] + randomInt % range;
 }
 /**
  * Returns random item from array
  * @param {Array} arr
- * @param {Function} prng PRND algorithm
+ * @param {Function} prng Password random number generator
+ * @param { Array } seed Seed
  * @return {*} Random item
  */
 
 
-function randomItem(arr) {
-  return arr[random([0, arr.length - 1])];
+function randomItem(arr, prng, seed) {
+  return arr[random([0, arr.length - 1], prng, seed)];
 }
 /**
  * Returns array without values
@@ -1020,10 +1079,10 @@ function numSequence(from, to, inclusive) {
  */
 
 
-function shuffle(arr) {
+function shuffle(arr, prng, seed) {
   if (arr.length <= 1) return arr;
   timesMap(arr.length, function (item, index) {
-    var randomIndex = random([0, arr.length - 1]);
+    var randomIndex = random([0, arr.length - 1], prng, seed);
     var _ref = [arr[randomIndex], arr[index]];
     arr[index] = _ref[0];
     arr[randomIndex] = _ref[1];
@@ -1121,13 +1180,16 @@ var _require = __webpack_require__(599),
     isNumber = _require.isNumber;
 
 var PRNGs = __webpack_require__(664);
+
+var _require2 = __webpack_require__(876),
+    name = _require2.name;
 /**
  * Module name
  * @const
  */
 
 
-var MODULE_NAME = 'passfather';
+var MODULE_NAME = name;
 /**
  * Default passfather options
  * @const
@@ -1149,6 +1211,7 @@ var DEFAULT_OPTIONS = {
  */
 
 var OPTION_VALIDATORS = {
+  _memo: {},
   numbers: function numbers(value) {
     return isBoolean(value);
   },
@@ -1192,6 +1255,12 @@ var OPTION_VALIDATORS = {
   completely(options) {
     var _this = this;
 
+    var optionsKey = Object.entries(new Object(options)).toString();
+
+    if (this._memo[optionsKey]) {
+      return this._memo[optionsKey];
+    }
+
     var cases = [// [IMPORTANT] Order is important, because index of case matches with error code
     function () {
       return (options === undefined || isPlainObject(options) && keys(options).length === 0) === false;
@@ -1224,9 +1293,12 @@ var OPTION_VALIDATORS = {
       var opts = assign({}, DEFAULT_OPTIONS, options);
       return (options.hasOwnProperty('seed') && opts.prng === 'default') === false;
     }];
-    return cases.findIndex(function (item) {
+    var result = cases.findIndex(function (item) {
       return item() === false;
     });
+    this._memo[optionsKey] = result; // Memoize result value
+
+    return result;
   }
 
 };
@@ -1256,6 +1328,14 @@ module.exports = {
   DEFAULT_OPTIONS
 };
 
+/***/ }),
+
+/***/ 876:
+/***/ ((module) => {
+
+"use strict";
+module.exports = JSON.parse('{"name":"passfather","version":"3.0.0","description":"Passfather is very fast and powerful utility with zero dependencies to generate strong password","author":"Evgeny Vyushin <e@vyushin.ru> (https://github.com/vyushin)","contributors":["Evgeny Vyushin <e@vyushin.ru> (https://github.com/vyushin)"],"maintainers":["Evgeny Vyushin <e@vyushin.ru> (https://github.com/vyushin)"],"repository":{"type":"git","url":"https://github.com/vyushin/passfather"},"scripts":{"install-all":"cd ./build && npm install && cd ../test && npm install","build:cdn":"cd ./build && npm run build:cdn","build:umd":"cd ./build && npm run build:umd","build":"cd ./build && npm run build","pretest":"npm run build","test":"cd ./test && npm test","prepublish":"npm test"},"bugs":{"url":"https://github.com/vyushin/passfather/issues"},"homepage":"https://github.com/vyushin/passfather","main":"./dist/passfather.js","module":"./dist/passfather.esm.js","types":"./dist/passfather.d.ts","license":"MIT","keywords":["password","generator","passgen"],"directories":{"doc":"./README.md"},"devDependencies":{}}');
+
 /***/ })
 
 /******/ 	});
@@ -1266,8 +1346,9 @@ module.exports = {
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/ 		// Check if module is in cache
-/******/ 		if(__webpack_module_cache__[moduleId]) {
-/******/ 			return __webpack_module_cache__[moduleId].exports;
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
 /******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = __webpack_module_cache__[moduleId] = {
@@ -1284,10 +1365,13 @@ module.exports = {
 /******/ 	}
 /******/ 	
 /************************************************************************/
-/******/ 	// module exports must be returned from runtime so entry inlining is disabled
+/******/ 	
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(670);
+/******/ 	// This entry module is referenced by other modules so it can't be inlined
+/******/ 	var __webpack_exports__ = __webpack_require__(670);
+/******/ 	
+/******/ 	return __webpack_exports__;
 /******/ })()
 ;
 });
