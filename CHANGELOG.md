@@ -1,3 +1,6 @@
+## 3.0.3 (January 02, 2022)
+* Fix examples
+
 ## 3.0.2 (January 02, 2022)
 * Fix ESM bundle
 * Remove validation cache
