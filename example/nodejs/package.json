@@ -5,6 +5,6 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "passfather": "latest"
+    "passfather": "^3.0.2"
   }
 }

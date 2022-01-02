@@ -5,9 +5,7 @@
     <title>passfather ESM example</title>
     <script type="module">
         import passfather from 'https://unpkg.com/passfather@latest/dist/passfather.min.mjs';
-        const body = document.querySelector('body')
-        const password = passfather({ length: 50 });
-        body.innerText = password;
+        document.querySelector('body').innerText = passfather({ length: 50 });
     </script>
 </head>
     <body></body>
