@@ -28,7 +28,6 @@ const DEFAULT_OPTIONS = {
  * Methods must return true is validation successfully passed
  */
 const OPTION_VALIDATORS = {
-  _memo: {},
   numbers: value => isBoolean(value),
   uppercase: value => isBoolean(value),
   lowercase: value => isBoolean(value),
@@ -46,10 +45,6 @@ const OPTION_VALIDATORS = {
    * @return {Number} Error code or 0 if validation passed
    */
   completely(options) {
-    const optionsKey = Object.entries(new Object(options)).toString();
-    if (this._memo[optionsKey]) {
-      return this._memo[optionsKey];
-    }
     const cases = [
       // [IMPORTANT] Order is important, because index of case matches with error code
       () => (options === undefined || isPlainObject(options) && keys(options).length === 0) === false,
@@ -73,7 +68,6 @@ const OPTION_VALIDATORS = {
       },
     ];
     const result = cases.findIndex(item => item() === false);
-    this._memo[optionsKey] = result; // Memoize result value
     return result;
   },
 };

@@ -1,3 +1,7 @@
+## 3.0.2 (January 02, 2022)
+* Fix ESM bundle
+* Remove validation cache
+
 ## 3.0.1 (August 24, 2021)
 * Update README.md
 
