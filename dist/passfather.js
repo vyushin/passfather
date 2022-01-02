@@ -1,6 +1,6 @@
 /*!
  * @file passfather.js
- * @version 3.0.0
+ * @version 3.0.2-beta.3
  * @description Passfather is very fast and powerful utility with zero dependencies to generate strong password
  * @copyright Copyright (c) 2019-present, Evgeny Vyushin <e@vyushin.ru> (https://github.com/vyushin)
  * @license
@@ -1211,7 +1211,6 @@ var DEFAULT_OPTIONS = {
  */
 
 var OPTION_VALIDATORS = {
-  _memo: {},
   numbers: function numbers(value) {
     return isBoolean(value);
   },
@@ -1255,12 +1254,6 @@ var OPTION_VALIDATORS = {
   completely(options) {
     var _this = this;
 
-    var optionsKey = Object.entries(new Object(options)).toString();
-
-    if (this._memo[optionsKey]) {
-      return this._memo[optionsKey];
-    }
-
     var cases = [// [IMPORTANT] Order is important, because index of case matches with error code
     function () {
       return (options === undefined || isPlainObject(options) && keys(options).length === 0) === false;
@@ -1296,8 +1289,6 @@ var OPTION_VALIDATORS = {
     var result = cases.findIndex(function (item) {
       return item() === false;
     });
-    this._memo[optionsKey] = result; // Memoize result value
-
     return result;
   }
 
@@ -1334,7 +1325,7 @@ module.exports = {
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse('{"name":"passfather","version":"3.0.0","description":"Passfather is very fast and powerful utility with zero dependencies to generate strong password","author":"Evgeny Vyushin <e@vyushin.ru> (https://github.com/vyushin)","contributors":["Evgeny Vyushin <e@vyushin.ru> (https://github.com/vyushin)"],"maintainers":["Evgeny Vyushin <e@vyushin.ru> (https://github.com/vyushin)"],"repository":{"type":"git","url":"https://github.com/vyushin/passfather"},"scripts":{"install-all":"cd ./build && npm install && cd ../test && npm install","build:cdn":"cd ./build && npm run build:cdn","build:umd":"cd ./build && npm run build:umd","build":"cd ./build && npm run build","pretest":"npm run build","test":"cd ./test && npm test","prepublish":"npm test"},"bugs":{"url":"https://github.com/vyushin/passfather/issues"},"homepage":"https://github.com/vyushin/passfather","main":"./dist/passfather.js","module":"./dist/passfather.esm.js","types":"./dist/passfather.d.ts","license":"MIT","keywords":["password","generator","passgen"],"directories":{"doc":"./README.md"},"devDependencies":{}}');
+module.exports = JSON.parse('{"name":"passfather","version":"3.0.2-beta.3","description":"Passfather is very fast and powerful utility with zero dependencies to generate strong password","author":"Evgeny Vyushin <e@vyushin.ru> (https://github.com/vyushin)","contributors":["Evgeny Vyushin <e@vyushin.ru> (https://github.com/vyushin)"],"maintainers":["Evgeny Vyushin <e@vyushin.ru> (https://github.com/vyushin)"],"repository":{"type":"git","url":"https://github.com/vyushin/passfather"},"scripts":{"install-all":"cd ./build && npm install && cd ../test && npm install","build:cdn":"cd ./build && npm run build:cdn","build:umd":"cd ./build && npm run build:umd","build":"cd ./build && npm run build","pretest":"npm run build","test":"cd ./test && npm test","prepublish":"npm test"},"bugs":{"url":"https://github.com/vyushin/passfather/issues"},"homepage":"https://github.com/vyushin/passfather","main":"./dist/passfather.js","module":"./dist/passfather.esm.js","types":"./dist/passfather.d.ts","license":"MIT","keywords":["password","generator","passgen"],"directories":{"doc":"./README.md"},"devDependencies":{}}');
 
 /***/ })
 

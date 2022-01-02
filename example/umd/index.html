@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>passfather UMD example</title>
+    <script src="https://unpkg.com/passfather@latest/dist/passfather.min.js"></script>
+    <script>
+        const body = document.querySelector('body')
+        const password = passfather({ length: 50 });
+        body.innerText = password;
+    </script>
+</head>
+    <body></body>
+</html>

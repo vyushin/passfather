@@ -1,6 +1,6 @@
 /*!
  * @file passfather.mjs
- * @version 3.0.0
+ * @version 3.0.2-beta.3
  * @description Passfather is very fast and powerful utility with zero dependencies to generate strong password
  * @copyright Copyright (c) 2019-present, Evgeny Vyushin <e@vyushin.ru> (https://github.com/vyushin)
  * @license
@@ -658,17 +658,6 @@ module.exports = {
 
 /***/ }),
 
-/***/ 670:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-const {
-  passfather
-} = __webpack_require__(344);
-
-module.exports = passfather;
-
-/***/ }),
-
 /***/ 344:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
@@ -1188,7 +1177,6 @@ const DEFAULT_OPTIONS = {
  */
 
 const OPTION_VALIDATORS = {
-  _memo: {},
   numbers: value => isBoolean(value),
   uppercase: value => isBoolean(value),
   lowercase: value => isBoolean(value),
@@ -1208,12 +1196,6 @@ const OPTION_VALIDATORS = {
    * @return {Number} Error code or 0 if validation passed
    */
   completely(options) {
-    const optionsKey = Object.entries(new Object(options)).toString();
-
-    if (this._memo[optionsKey]) {
-      return this._memo[optionsKey];
-    }
-
     const cases = [// [IMPORTANT] Order is important, because index of case matches with error code
     () => (options === undefined || isPlainObject(options) && keys(options).length === 0) === false, () => isPlainObject(options), () => includesAll(keys(DEFAULT_OPTIONS), keys(options)), () => options.hasOwnProperty('ranges') === false || this.ranges(options.ranges), () => options.hasOwnProperty('numbers') === false || this.numbers(options.numbers), () => options.hasOwnProperty('uppercase') === false || this.uppercase(options.uppercase), () => options.hasOwnProperty('lowercase') === false || this.lowercase(options.lowercase), () => options.hasOwnProperty('symbols') === false || this.symbols(options.symbols), () => options.hasOwnProperty('length') === false || this.length(options.length), () => options.hasOwnProperty('prng') === false || this.prng(options.prng), () => options.hasOwnProperty('seed') === false || this.seed(options.seed), () => {
       const opts = assign({}, DEFAULT_OPTIONS, options);
@@ -1225,8 +1207,6 @@ const OPTION_VALIDATORS = {
       return (options.hasOwnProperty('seed') && opts.prng === 'default') === false;
     }];
     const result = cases.findIndex(item => item() === false);
-    this._memo[optionsKey] = result; // Memoize result value
-
     return result;
   }
 
@@ -1262,7 +1242,7 @@ module.exports = {
 /***/ 876:
 /***/ ((module) => {
 
-module.exports = JSON.parse('{"name":"passfather","version":"3.0.0","description":"Passfather is very fast and powerful utility with zero dependencies to generate strong password","author":"Evgeny Vyushin <e@vyushin.ru> (https://github.com/vyushin)","contributors":["Evgeny Vyushin <e@vyushin.ru> (https://github.com/vyushin)"],"maintainers":["Evgeny Vyushin <e@vyushin.ru> (https://github.com/vyushin)"],"repository":{"type":"git","url":"https://github.com/vyushin/passfather"},"scripts":{"install-all":"cd ./build && npm install && cd ../test && npm install","build:cdn":"cd ./build && npm run build:cdn","build:umd":"cd ./build && npm run build:umd","build":"cd ./build && npm run build","pretest":"npm run build","test":"cd ./test && npm test","prepublish":"npm test"},"bugs":{"url":"https://github.com/vyushin/passfather/issues"},"homepage":"https://github.com/vyushin/passfather","main":"./dist/passfather.js","module":"./dist/passfather.esm.js","types":"./dist/passfather.d.ts","license":"MIT","keywords":["password","generator","passgen"],"directories":{"doc":"./README.md"},"devDependencies":{}}');
+module.exports = JSON.parse('{"name":"passfather","version":"3.0.2-beta.3","description":"Passfather is very fast and powerful utility with zero dependencies to generate strong password","author":"Evgeny Vyushin <e@vyushin.ru> (https://github.com/vyushin)","contributors":["Evgeny Vyushin <e@vyushin.ru> (https://github.com/vyushin)"],"maintainers":["Evgeny Vyushin <e@vyushin.ru> (https://github.com/vyushin)"],"repository":{"type":"git","url":"https://github.com/vyushin/passfather"},"scripts":{"install-all":"cd ./build && npm install && cd ../test && npm install","build:cdn":"cd ./build && npm run build:cdn","build:umd":"cd ./build && npm run build:umd","build":"cd ./build && npm run build","pretest":"npm run build","test":"cd ./test && npm test","prepublish":"npm test"},"bugs":{"url":"https://github.com/vyushin/passfather/issues"},"homepage":"https://github.com/vyushin/passfather","main":"./dist/passfather.js","module":"./dist/passfather.esm.js","types":"./dist/passfather.d.ts","license":"MIT","keywords":["password","generator","passgen"],"directories":{"doc":"./README.md"},"devDependencies":{}}');
 
 /***/ })
 
@@ -1293,9 +1273,47 @@ module.exports = JSON.parse('{"name":"passfather","version":"3.0.0","description
 /******/ }
 /******/ 
 /************************************************************************/
+/******/ /* webpack/runtime/compat get default export */
+/******/ (() => {
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = (module) => {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			() => (module['default']) :
+/******/ 			() => (module);
+/******/ 		__webpack_require__.d(getter, { a: getter });
+/******/ 		return getter;
+/******/ 	};
+/******/ })();
 /******/ 
-/******/ // startup
-/******/ // Load entry module and return exports
-/******/ // This entry module is referenced by other modules so it can't be inlined
-/******/ var __webpack_exports__ = __webpack_require__(670);
+/******/ /* webpack/runtime/define property getters */
+/******/ (() => {
+/******/ 	// define getter functions for harmony exports
+/******/ 	__webpack_require__.d = (exports, definition) => {
+/******/ 		for(var key in definition) {
+/******/ 			if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 				Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 			}
+/******/ 		}
+/******/ 	};
+/******/ })();
 /******/ 
+/******/ /* webpack/runtime/hasOwnProperty shorthand */
+/******/ (() => {
+/******/ 	__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ })();
+/******/ 
+/************************************************************************/
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+(() => {
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Z": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _passfather__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(344);
+/* harmony import */ var _passfather__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_passfather__WEBPACK_IMPORTED_MODULE_0__);
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_passfather__WEBPACK_IMPORTED_MODULE_0__.passfather);
+})();
+
+var __webpack_exports__default = __webpack_exports__.Z;
+export { __webpack_exports__default as default };
