@@ -110,7 +110,7 @@ console.log(password); // Output "▋▆♟◥◢♎◥♚♞♚▆♚◥▆▉�
 ```
 
 The ranges option is array of UTF-8 char ranges.<br/>
-You can find all of them on [unicode table](https://unicode-table.com/ru/#box-drawing)
+You can find all of them on [unicode table](https://symbl.cc/ru/unicode-table/#box-drawing)
 
 Example above contains UTF-8 chars with codes from 9800 to 9807 and from 9818 to 9823 (zodiac signs and chess figures).<br/>
 The example also contains UTF-8 chars with codes from 9698 to 9701 and from 9606 to 9611 (geometric figures).
