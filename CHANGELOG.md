@@ -1,3 +1,7 @@
+## 3.0.4 (March 24, 2024)
+* Improving the README.md
+* Add tests with hexadecimal ranges
+
 ## 3.0.3 (January 02, 2022)
 * Fix examples
 
