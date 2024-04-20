@@ -1,3 +1,6 @@
+## 3.0.5 (April 21, 2024)
+* Add funding info
+
 ## 3.0.4 (March 24, 2024)
 * Improving the README.md
 * Add tests with hexadecimal ranges
