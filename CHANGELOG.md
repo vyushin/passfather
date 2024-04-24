@@ -1,3 +1,6 @@
+## 3.0.6 (April 24, 2024)
+* Add funding info to the README
+
 ## 3.0.5 (April 21, 2024)
 * Add funding info
 

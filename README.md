@@ -5,6 +5,13 @@
 
 **passfather** is a very fast and powerful utility with zero dependencies, designed to generate strong passwords or random strings.
 
+> **passfather is free** and will always remain free <br/>
+> A simple and quick way to support the project is to **buy me a coffee**. <br/>It will take no more than 5 minutes and will allow the project to keep going
+
+<a href="https://buymeacoffee.com/vyushin" target="_blank" title="Buy me a coffee">
+  <img height="50" alt="Buy me a coffee" src="https://github.com/vyushin/passfather/assets/8006957/3e894205-6dd9-47da-b547-5ea09353a7dd">
+</a>
+
 ## Table of contents
 * [Features](#features)
 * [Installation](#installation)
