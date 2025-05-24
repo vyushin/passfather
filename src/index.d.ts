@@ -4,9 +4,9 @@ export interface PassfatherOptions {
   lowercase?: boolean;
   symbols?: boolean;
   length?: number;
-  ranges?: Array<number[]>;
+  ranges?: number[][][];
   prng?: 'default' | 'Alea' | 'KISS07' | 'Kybos' | 'LFib' | 'LFIB4' | 'MRG32k3a' | 'Xorshift03';
-  seed?: Array<string | number>;
+  seed?: (string | number)[];
 }
 
 export default function passfather(options?: PassfatherOptions): string;

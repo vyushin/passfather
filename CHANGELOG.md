@@ -1,3 +1,6 @@
+## 4.0.1 (May 25, 2025)
+* fix types
+
 ## 4.0.0 (May 24, 2025)
 * Switched build system from Webpack to Rollup
 * Added end-to-end tests using Playwright
