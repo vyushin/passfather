@@ -2,19 +2,58 @@ const PRNGs = require('./PRNGs');
 const PRNGKeys = new Set(Object.keys(PRNGs));
 
 /**
- * Returns true if the code runs in Window
+ * Returns true if the code runs in browser
  * @return {Boolaen}
  */
-function hasWindow() {
-  return typeof window !== 'undefined' && window.hasOwnProperty('Window') && window instanceof window.Window;
+function isBrowser() {
+  return typeof window !== 'undefined' && typeof window.document !== 'undefined';
 }
 
 /**
  * Returns crypto module for this environment
  */
-function getCrypto() {
-  return hasWindow() ? window.crypto : eval(`require('crypto')`);
-}
+const getCrypto = (() => {
+  let cachedCrypto = null;
+
+  return function () {
+    if (cachedCrypto) return cachedCrypto;
+
+    if (isBrowser()) {
+      cachedCrypto = window.crypto;
+    } else {
+      try {
+        cachedCrypto = require('crypto');
+      } catch (e) {
+        throw new Error('Crypto API is not available in this environment');
+      }
+    }
+
+    return cachedCrypto;
+  };
+})();
+
+/**
+ * Returns os module for this environment
+ */
+const getOS = (() => {
+  let cachedOS = null;
+
+  return function () {
+    if (cachedOS) return cachedOS;
+
+    if (isBrowser()) {
+      cachedOS = {};
+    } else {
+      try {
+        cachedOS = require('os');
+      } catch (e) {
+        throw new Error('OS API is not available in this environment');
+      }
+    }
+
+    return cachedOS;
+  };
+})()
 
 /**
  * Returns 32bit random integer
@@ -30,7 +69,7 @@ function getRandomUint32(prng, seed) {
     return prngFn.uint32();
   }
   const crypto = getCrypto();
-  return hasWindow()
+  return isBrowser()
     ? crypto.getRandomValues(new Uint32Array(1))[0]
     : parseInt(crypto.randomBytes(4).toString('hex'), 16);
 }
@@ -266,7 +305,7 @@ function pick(arr, values) {
 }
 
 module.exports = {
-  hasWindow,
+  isBrowser,
   getRandomUint32,
   random,
   randomItem,
@@ -290,4 +329,5 @@ module.exports = {
   getCharsByDiapason,
   isCharCode,
   escapeRegExp,
+  getOS,
 };

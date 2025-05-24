@@ -1,0 +1,16 @@
+{
+  "private": true,
+  "dependencies": {
+    "passfather": "file:../.."
+  },
+  "devDependencies": {
+    "ts-node": "10.9.2",
+    "typescript": "5.8.3"
+  },
+  "scripts": {
+    "clean": "rm -rf ./node_modules ./ts-test.js",
+    "pretest": "npm run clean && npm i",
+    "posttest": "npm run clean",
+    "test": "node cjs-test.js && tsc ts-test.ts && npx ts-node ts-test.ts && echo ✅ Integration test passed"
+  }
+}

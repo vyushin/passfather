@@ -1,2 +1,2 @@
-import { passfather } from './passfather';
+import { passfather } from './passfather.js';
 export default passfather;

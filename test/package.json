@@ -15,7 +15,10 @@
     "url": "https://github.com/vyushin/passfather/test"
   },
   "scripts": {
-    "test": "jest"
+    "test:playwright": "node ./playwright/start",
+    "test:jest": "jest ./jest",
+    "test:integration": "cd ./integration && npm test",
+    "test": "npm run test:jest && npm run test:playwright && npm run test:integration"
   },
   "bugs": {
     "url": "https://github.com/vyushin/passfather/issues"
@@ -24,6 +27,10 @@
   "main": "./index.js",
   "license": "MIT",
   "devDependencies": {
-    "jest": "^24.8.0"
+    "@playwright/test": "1.52.0",
+    "jest": "29.7.0",
+    "tree-kill": "1.2.2",
+    "ts-node": "^10.9.2",
+    "typescript": "5.8.3"
   }
 }

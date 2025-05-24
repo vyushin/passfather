@@ -40,7 +40,7 @@ By default, it uses [getRandomValues](https://developer.mozilla.org/ru/docs/Web/
 ###### ESM
 ```html
 <script type="module">
-    import passfather from 'https://unpkg.com/passfather@latest/dist/passfather.min.mjs'
+    import passfather from 'https://unpkg.com/passfather@latest/dist/esm/passfather.min.js'
     console.log( passfather() ); // Output "vFR_@1hDMhAr"
 </script>
 ```
@@ -48,7 +48,7 @@ By default, it uses [getRandomValues](https://developer.mozilla.org/ru/docs/Web/
 ###### UMD
 
 ```html
-<script src="https://unpkg.com/passfather@latest/dist/passfather.min.js"></script>
+<script src="https://unpkg.com/passfather@latest/dist/umd/passfather.min.js"></script>
 <script>
     console.log( passfather() ); // Output "r_@1hDvFRMhA"
 </script>

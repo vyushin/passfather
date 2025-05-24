@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Passfather Browser Test</title>
+</head>
+<body>
+<script type="module">
+  import passfather from 'http://localhost:3002/dist/esm/passfather.min.js';
+  window.generatedPassword = passfather({
+    length: 64,
+    numbers: true,
+    uppercase: true,
+    lowercase: true,
+    symbols: true
+  });
+</script>
+</body>
+</html>
