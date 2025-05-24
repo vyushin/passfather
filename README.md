@@ -5,6 +5,9 @@
 
 **passfather** is a very fast and powerful utility with zero dependencies, designed to generate strong passwords or random strings.
 
+![passfather](https://github.com/user-attachments/assets/7ad3a013-a80d-41ec-8a73-2a4d1b201432)
+
+
 > **passfather is free** and will always remain free <br/>
 > A simple and quick way to support the project is to **buy me a coffee**. <br/>It will take no more than 5 minutes and will allow the project to keep going
 
