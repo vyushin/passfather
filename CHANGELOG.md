@@ -1,3 +1,11 @@
+## 4.0.0 (May 24, 2025)
+* Switched build system from Webpack to Rollup
+* Added end-to-end tests using Playwright
+* Added integration tests (require/import/ts)
+* Reduced package size by 4× (from ~150 KB to ~40 KB)
+* Type declarations (`.d.ts`) are now generated and published for both ESM and UMD
+* `exports` field added to `package.json` for modern bundler compatibility (Node 20+, Vite, etc.)
+
 ## 3.0.6 (April 24, 2024)
 * Add funding info to the README
 

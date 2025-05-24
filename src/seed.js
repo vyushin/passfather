@@ -1,11 +1,11 @@
-const { compact, hasWindow } = require('./utils');
-const os = hasWindow() ? {} : eval(`require('os')`);
+const { compact, isBrowser, getOS } = require('./utils');
+const os = getOS();
 
 /**
  * Default seed for prng
  * @const
  */
-const DEFAULT_NODE_SEED = !hasWindow() ? compact([].concat(
+const DEFAULT_NODE_SEED = !isBrowser() ? compact([].concat(
   Date.now(),
   (
     process.memoryUsage
@@ -31,7 +31,7 @@ const DEFAULT_NODE_SEED = !hasWindow() ? compact([].concat(
  * Default seed for prng
  * @const
  */
-const DEFAULT_BROWSER_SEED = hasWindow() ? compact([].concat(
+const DEFAULT_BROWSER_SEED = isBrowser() ? compact([].concat(
   Date.now(),
   (
     performance && performance.memory

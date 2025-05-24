@@ -1,5 +1,5 @@
-const { getRandomUint32, ...utils } = require('../src/utils');
-const PRNGs = require('../src/PRNGs');
+const { getRandomUint32, ...utils } = require('../../src/utils');
+const PRNGs = require('../../src/PRNGs');
 
 const getNodeSeed = () => {
   return [Date.now(), process.memoryUsage().heapTotal, process.memoryUsage().heapUsed];
@@ -14,20 +14,19 @@ describe('Test utils.js', () => {
     const PRNGsKeysWithDefault = [undefined, 'default', ...PRNGsKeysWithoutDefault];
 
     describe.each(PRNGsKeysWithDefault)('Must have unique value without seed', (prng) => {
-      test(`With PRNG ${prng}`, () => {
-        const v1 = getRandomUint32(prng);
-        wait(1).then(() => { // Waiting because non default prng uses "new Date()" seed
-          const v2 = getRandomUint32(prng);
-          expect(v1).not.toBe(v2);
-        });
+      test(`With PRNG ${prng}`, async () => {
+        const n1 = getRandomUint32(prng);
+        await wait(100); // Waiting because non default prng uses "new Date()" seed
+        const n2 = getRandomUint32(prng);
+        expect(n1).not.toBe(n2);
       });
     });
 
     describe.each(PRNGsKeysWithDefault)('Must have unique value with different seed', (prng) => {
       test(`With PRNG ${prng}`, () => {
-        const v1 = getRandomUint32(prng, getNodeSeed());
-        const v2 = getRandomUint32(prng, getNodeSeed());
-        expect(v1).not.toBe(v2);
+        const n1 = getRandomUint32(prng, getNodeSeed());
+        const n2 = getRandomUint32(prng, getNodeSeed());
+        expect(n1).not.toBe(n2);
       });
     });
 

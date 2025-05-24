@@ -1,8 +1,8 @@
-const { CHAR_RANGES } = require('../src/passfather');
-const { ERROR_MESSAGES, DEFAULT_OPTIONS } = require('../src/validatingOptions');
-const { random, getCharsByDiapason, without, escapeRegExp, randomItem, keys } = require('../src/utils');
-const PRNGs = require('../src/PRNGs');
-const passfather = require('../dist/passfather.js');
+const { CHAR_RANGES } = require('../../src/passfather');
+const { ERROR_MESSAGES, DEFAULT_OPTIONS } = require('../../src/validatingOptions');
+const { random, getCharsByDiapason, without, escapeRegExp, randomItem, keys } = require('../../src/utils');
+const PRNGs = require('../../src/PRNGs');
+const passfather = require('../../dist/umd/passfather.min.js');
 
 CHAR_RANGES.push([ // Fictional ranges
   [[1248, 1263]],

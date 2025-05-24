@@ -1,6 +1,6 @@
 {
   "name": "passfather",
-  "version": "3.0.6",
+  "version": "4.0.0",
   "description": "Passfather is very fast and powerful utility with zero dependencies to generate strong password",
   "author": "Evgeny Vyushin <e@vyushin.ru> (https://github.com/vyushin)",
   "contributors": [
@@ -15,20 +15,25 @@
   },
   "scripts": {
     "install-all": "cd ./build && npm install && cd ../test && npm install",
-    "build:cdn": "cd ./build && npm run build:cdn",
-    "build:umd": "cd ./build && npm run build:umd",
     "build": "cd ./build && npm run build",
     "pretest": "npm run build",
     "test": "cd ./test && npm test",
-    "prepublish": "npm test"
+    "prepublish": "npm test && npm pack --dry-run"
   },
   "bugs": {
     "url": "https://github.com/vyushin/passfather/issues"
   },
   "homepage": "https://github.com/vyushin/passfather",
-  "main": "./dist/passfather.js",
-  "module": "./dist/passfather.esm.js",
+  "main": "./dist/umd/passfather.min.js",
   "types": "./dist/passfather.d.ts",
+  "module": "./dist/esm/passfather.min.js",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/passfather.min.js",
+      "require": "./dist/umd/passfather.min.js",
+      "types": "./dist/passfather.d.ts"
+    }
+  },
   "license": "MIT",
   "keywords": [
     "password",
@@ -38,6 +43,11 @@
   "directories": {
     "doc": "./README.md"
   },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "devDependencies": {},
   "funding": [
     {
