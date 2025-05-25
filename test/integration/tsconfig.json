@@ -1,11 +1,11 @@
 {
   "compilerOptions": {
-    "target": "ES5",
+    "target": "ESNext",
     "module": "CommonJS",
     "moduleResolution": "Node",
     "strict": true,
     "esModuleInterop": true,
-    "skipLibCheck": true,
-    "allowJs": true
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true
   }
 }

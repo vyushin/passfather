@@ -16,7 +16,7 @@
   },
   "scripts": {
     "test:playwright": "node ./playwright/start",
-    "test:jest": "jest ./jest",
+    "test:jest": "jest ./jest --config ./jest/jest.config.js",
     "test:integration": "cd ./integration && npm test",
     "test": "npm run test:jest && npm run test:playwright && npm run test:integration"
   },

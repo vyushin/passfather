@@ -12,48 +12,15 @@ function isBrowser() {
 /**
  * Returns crypto module for this environment
  */
-const getCrypto = (() => {
-  let cachedCrypto = null;
-
-  return function () {
-    if (cachedCrypto) return cachedCrypto;
-
-    if (isBrowser()) {
-      cachedCrypto = window.crypto;
-    } else {
-      try {
-        cachedCrypto = require('crypto');
-      } catch (e) {
-        throw new Error('Crypto API is not available in this environment');
-      }
-    }
-
-    return cachedCrypto;
-  };
-})();
-
-/**
- * Returns os module for this environment
- */
-const getOS = (() => {
-  let cachedOS = null;
-
-  return function () {
-    if (cachedOS) return cachedOS;
-
-    if (isBrowser()) {
-      cachedOS = {};
-    } else {
-      try {
-        cachedOS = require('os');
-      } catch (e) {
-        throw new Error('OS API is not available in this environment');
-      }
-    }
-
-    return cachedOS;
-  };
-})()
+function getCrypto() {
+  if (isBrowser() && typeof window.crypto !== 'undefined') {
+    return window.crypto;
+  }
+  if (globalThis.passfather?.externals?.crypto) {
+    return globalThis.passfather.externals.crypto;
+  }
+  throw new Error('Crypto API is not available in this environment');
+}
 
 /**
  * Returns 32bit random integer
@@ -329,5 +296,4 @@ module.exports = {
   getCharsByDiapason,
   isCharCode,
   escapeRegExp,
-  getOS,
 };

@@ -1,3 +1,18 @@
+## 4.1.0 (May 25, 2025)
+*  Changed ESM entry point to .mjs: passfather.min.js → passfather.min.mjs
+* Updated all references in README.md, package.json, Playwright test HTML, and rollup.config.js to use .mjs
+* Removed legacy src/index.esm.js file
+* Removed dependency on the os module in utils.js and seed.js
+* Added src/externals/index.mjs with await import('crypto') for ESM environments
+* Added src/externals/index.js using require('crypto') for CJS environments
+* Created src/index.mjs with await initExternals() and export default passfather
+* Updated src/index.js to call initExternals() on load
+* Added ESM integration test: test/integration/esm-test.mjs
+* Included ESM test in integration test runner script
+* Added test/jest/jest.config.js and jest.setup.js with globalThis.passfather.externals.crypto for test compatibility
+* Adjusted tsconfig.json in integration tests to use target: ESNext, esModuleInterop, and allowSyntheticDefaultImports
+* Added output.globals.crypto in UMD build to suppress Rollup warnings
+
 ## 4.0.3 (May 25, 2025)
 * Update build
 
