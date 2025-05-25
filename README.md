@@ -6,7 +6,7 @@
 [![types](https://img.shields.io/npm/types/passfather.svg)](https://github.com/vyushin/passfather/blob/main/dist/passfather.d.ts)
 [![license](https://img.shields.io/github/license/vyushin/passfather.svg?style=flat-square)](https://github.com/vyushin/passfather/blob/master/LICENSE)
 
-**passfather** is a very fast and powerful utility with zero dependencies, designed to generate strong passwords or random strings.
+**passfather** is a lightweight and powerful password generator for JavaScript and TypeScript — zero dependencies, high entropy, full browser and Node.js support.
 
 ![passfather is a lightweight and powerful password generator for JavaScript and TypeScript projects — zero dependencies, high entropy, full browser and Node.js support](https://github.com/user-attachments/assets/7ad3a013-a80d-41ec-8a73-2a4d1b201432)
 
