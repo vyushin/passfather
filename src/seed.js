@@ -1,5 +1,4 @@
-const { compact, isBrowser, getOS } = require('./utils');
-const os = getOS();
+const { compact, isBrowser } = require('./utils');
 
 /**
  * Default seed for prng
@@ -20,8 +19,6 @@ const DEFAULT_NODE_SEED = !isBrowser() ? compact([].concat(
       ? [
         process.arch,
         process.platform,
-        os.cpus().length,
-        os.totalmem(),
       ]
       : null
   )

@@ -9,9 +9,9 @@ import { SRC_DIR, DIST_DIR, BANNER } from './constants';
 export default [
   // ESM
   {
-    input: path.resolve(SRC_DIR, './index.esm.js'),
+    input: path.resolve(SRC_DIR, './index.mjs'),
     output: {
-      file: path.resolve(DIST_DIR, './esm/passfather.min.js'),
+      file: path.resolve(DIST_DIR, './esm/passfather.min.mjs'),
       format: 'es',
       exports: 'default',
       banner: BANNER,
@@ -28,7 +28,7 @@ export default [
         }]
       })
     ],
-    external: ['crypto', 'os'],
+    external: ['crypto'],
   },
 
   // UMD
@@ -40,12 +40,15 @@ export default [
       name: 'passfather',
       exports: 'default',
       banner: BANNER,
+      globals: {
+        crypto: 'crypto',
+      },
     },
     plugins: [
       commonjs(),
       json(),
       terser(),
     ],
-    external: ['crypto', 'os'],
+    external: ['crypto'],
   }
 ];
