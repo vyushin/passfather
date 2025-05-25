@@ -1,7 +1,7 @@
 # passfather
 [![version](https://img.shields.io/npm/v/passfather.svg?style=flat-square)](https://www.npmjs.com/package/passfather)
 [![npm downloads](https://img.shields.io/npm/d18m/passfather)](https://www.npmjs.com/package/passfather)
-[![CI](https://github.com/vyushin/passfather/actions/workflows/nodejs.yml/badge.svg)](https://github.com/vyushin/passfather/actions)
+[![CI](https://github.com/vyushin/passfather/actions/workflows/nodejs.yml/badge.svg)](https://github.com/vyushin/passfather/actions/workflows/.github/workflows/nodejs.yml)
 [![npm bundle size](https://img.shields.io/bundlephobia/min/passfather)](https://github.com/vyushin/passfather/tree/main/dist)
 [![types](https://img.shields.io/npm/types/passfather.svg)](https://github.com/vyushin/passfather/blob/main/dist/passfather.d.ts)
 [![license](https://img.shields.io/github/license/vyushin/passfather.svg?style=flat-square)](https://github.com/vyushin/passfather/blob/master/LICENSE)
