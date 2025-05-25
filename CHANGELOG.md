@@ -1,3 +1,7 @@
+## 4.0.2 (May 25, 2025)
+* Аdd new badges to the readme
+* Improve content
+
 ## 4.0.1 (May 25, 2025)
 * fix types
 
