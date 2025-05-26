@@ -37,10 +37,15 @@ By default, it uses [getRandomValues](https://developer.mozilla.org/ru/docs/Web/
 ## Installation
 
 ###### NPM
-`npm install --save passfather`
+```bash
+npm install --save passfather
+```
 
 ###### Yarn
-`yarn add passfather`
+```bash
+yarn add passfather
+```
+
 
 ###### ESM
 ```html
