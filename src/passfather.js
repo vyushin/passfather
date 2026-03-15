@@ -1,4 +1,4 @@
-const { compact, assign, timesMap, hasWindow, ...utils } = require('./utils');
+const { compact, assign, timesMap, isBrowser, ...utils } = require('./utils');
 const { OPTION_VALIDATORS, ERROR_MESSAGES, DEFAULT_OPTIONS } = require('./validatingOptions');
 const { DEFAULT_BROWSER_SEED, DEFAULT_NODE_SEED } = require('./seed');
 
@@ -34,7 +34,7 @@ function getCharRanges(options) {
 
 function getEnvironmentSeed({ seed }) {
   const hasSeed = Boolean(seed);
-  if (hasWindow()) {
+  if (isBrowser()) {
     return hasSeed ? seed : DEFAULT_BROWSER_SEED;
   }
   return hasSeed ? seed : DEFAULT_NODE_SEED;

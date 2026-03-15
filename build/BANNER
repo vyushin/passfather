@@ -1,7 +1,8 @@
-@file [file]
+/*
 @version [version]
 @description [description]
 @copyright Copyright (c) 2019-present, [author]
 @license
 This source code is licensed under the MIT license found in the
-LICENSE file on https://github.com/vyushin/passfather/blob/master/LICENSE
+LICENSE file on https://github.com/vyushin/passfather/blob/main/LICENSE
+*/

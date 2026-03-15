@@ -1,8 +1,21 @@
 # passfather
 [![version](https://img.shields.io/npm/v/passfather.svg?style=flat-square)](https://www.npmjs.com/package/passfather)
-[![license](https://img.shields.io/github/license/vyushin/passfather.svg?style=flat-square)](https://github.com/vyushin/passfather/blob/master/LICENSE)
+[![npm downloads](https://img.shields.io/npm/d18m/passfather)](https://www.npmjs.com/package/passfather)
+[![CI](https://github.com/vyushin/passfather/actions/workflows/nodejs.yml/badge.svg?branch=main)](https://github.com/vyushin/passfather/actions/workflows/nodejs.yml)
+[![npm bundle size](https://img.shields.io/bundlephobia/min/passfather)](https://github.com/vyushin/passfather/tree/main/dist)
+[![types](https://img.shields.io/npm/types/passfather.svg)](https://github.com/vyushin/passfather/blob/main/dist/passfather.d.ts)
+[![license](https://img.shields.io/github/license/vyushin/passfather.svg?style=flat-square)](https://github.com/vyushin/passfather/blob/main/LICENSE)
 
-**passfather** is very fast and powerful utility with zero dependencies to generate strong password or random string.
+**passfather** is a lightweight and powerful password generator for JavaScript and TypeScript — zero dependencies, high entropy, full browser and Node.js support.
+
+![passfather is a lightweight and powerful password generator for JavaScript and TypeScript projects — zero dependencies, high entropy, full browser and Node.js support](https://github.com/user-attachments/assets/7ad3a013-a80d-41ec-8a73-2a4d1b201432)
+
+> **passfather is free** and will always remain free <br/>
+> A simple and quick way to support the project is to **buy me a coffee**. <br/>It will take no more than 5 minutes and will allow the project to keep going
+> 
+> <a href="https://buymeacoffee.com/vyushin" target="_blank" title="Buy me a coffee">
+>   <img height="50" alt="Buy me a coffee" src="https://github.com/vyushin/passfather/assets/8006957/3e894205-6dd9-47da-b547-5ea09353a7dd">
+> </a>
 
 ## Table of contents
 * [Features](#features)
@@ -10,29 +23,34 @@
 * [Example](#example)
 * [Options](#options)
 * [Contributing](#contributing)
-* [Licence](#license)
+* [License](#license)
 
 ## Features
 
-* Support browsers and Node.js;
-* Multiple random number algorithmes such as Alea, KISS07, Kybos, LFib, LFIB4, MRG32k3a, Xorshift03.
-By default using [getRandomValues](https://developer.mozilla.org/ru/docs/Web/API/RandomSource/getRandomValues) for browsers and [getRandomBytes](https://nodejs.org/api/crypto.html#crypto_crypto_randombytes_size_callback) for Node.js;
-* Support seed with entropy;
-* Optional using any of unicode chars (ranges). By default there are uppercase, lowercase, numbers and about ten symbols;
-* Any length;
+* Supports both browsers and Node.js;
+* Offers multiple random number algorithms such as Alea, KISS07, Kybos, LFib, LFIB4, MRG32k3a, Xorshift03.
+By default, it uses [getRandomValues](https://developer.mozilla.org/en-US/docs/Web/API/Crypto/getRandomValues) for browsers and [randomBytes](https://nodejs.org/api/crypto.html#cryptorandombytessize-callback) for Node.js;
+* Supports seeding with entropy;
+* Optionally utilizes any Unicode characters;
+* Allows for any password length.
 
 ## Installation
 
 ###### NPM
-`npm install --save passfather`
+```bash
+npm install --save passfather
+```
 
 ###### Yarn
-`yarn add passfather`
+```bash
+yarn add passfather
+```
+
 
 ###### ESM
 ```html
 <script type="module">
-    import passfather from 'https://unpkg.com/passfather@latest/dist/passfather.min.mjs'
+    import passfather from 'https://unpkg.com/passfather@latest/dist/esm/passfather.min.mjs'
     console.log( passfather() ); // Output "vFR_@1hDMhAr"
 </script>
 ```
@@ -40,7 +58,7 @@ By default using [getRandomValues](https://developer.mozilla.org/ru/docs/Web/API
 ###### UMD
 
 ```html
-<script src="https://unpkg.com/passfather@latest/dist/passfather.min.js"></script>
+<script src="https://unpkg.com/passfather@latest/dist/umd/passfather.min.js"></script>
 <script>
     console.log( passfather() ); // Output "r_@1hDvFRMhA"
 </script>
@@ -48,7 +66,7 @@ By default using [getRandomValues](https://developer.mozilla.org/ru/docs/Web/API
 
 ## Example
 
-It's very easy! Just import **passfather** and run it.
+It's very easy! Just import **passfather** and run the function.
 
 ```javascript
 import passfather from 'passfather';
@@ -56,8 +74,7 @@ const password = passfather();
 console.log(password); // Output "9g'Jta75Gl3w"
 ```
 
-By default passfather doesn't require any options. But it's possible to pass options object to
-customize password.
+By default, passfather does not require any options. However, it is possible to pass an options object to customize the password.
 
 ```javascript
 import passfather from 'passfather';
@@ -71,7 +88,7 @@ const password = passfather({
 console.log(password); // Output "40rAe2hqiM0UzTmN"
 ```
 
-**NOTE:** if option object is passed then it merges with default options object.
+**Note:** when an options object is passed, it merges with the default configuration.
 
 ## Options
 
@@ -81,15 +98,14 @@ console.log(password); // Output "40rAe2hqiM0UzTmN"
 |uppercase|boolean|`true`|Enable/disable uppercase
 |lowercase|boolean|`true`|Enable/disable lowercase
 |symbols|boolean|`true`|Enable/disable symbols
-|length|integer|`12`|Final string length
-|prng|string|`default`|[Pseudorandom Number Generator](https://en.wikipedia.org/wiki/Pseudorandom_number_generator). Generating random string algorithm is using random numbers that generated by prng. Might be: default, Alea, KISS07, Kybos, LFib, LFIB4, MRG32k3a, Xorshift03.
-|seed|array|[seed.js](https://github.com/vyushin/passfather/blob/master/src/seed.js)|Seed for prng. See [random seed](https://en.wikipedia.org/wiki/Random_seed). NOTE: Default value doesn't have enough entropy. Please, using your own values.
-|ranges|array|`null`|UTF-8 char ranges that will using to generate random string. See below.
+|length|integer|`12`|Length of the generated string
+|prng|string|`default`| The algorithm for generating random strings uses random numbers generated by a [pseudorandom number generator](https://en.wikipedia.org/wiki/Pseudorandom_number_generator) (PRNG). Options include default, Alea, KISS07, Kybos, LFib, LFIB4, MRG32k3a, and Xorshift03. By default, it uses [getRandomValues](https://developer.mozilla.org/en-US/docs/Web/API/Crypto/getRandomValues) for browsers and [randomBytes](https://nodejs.org/api/crypto.html#cryptorandombytessize-callback) for Node.js.
+|seed|array|[seed.js](https://github.com/vyushin/passfather/blob/main/src/seed.js)|Seed for the PRNG. See [random seed](https://en.wikipedia.org/wiki/Random_seed) for details. Note: the default value may not have sufficient entropy. It is recommended to use your own values for better security.
+|ranges|array|`null`|UTF-8 character ranges that will be used to generate the random string. See below for details.
 
-### Options: `ranges` (custom chars)
+### Options: `ranges` (custom characters)
 
-Passfather can make password containing custom chars.<br/>
-It's possible via ranges option.
+Passfather can create passwords containing custom characters through the `ranges` option.
 
 For example:
 
@@ -102,22 +118,22 @@ const password = passfather({
   symbols: false,
   length: 16,
   ranges: [ 
-    [[9800, 9807], [9818, 9823]], // Group of char range. Zodiac signs, chess figures.
-    [[9698, 9701], [9606, 9611]], // Group of char range. Geometric figures
+    [[9800, 9807], [9818, 9823]], // Group of character ranges including zodiac signs and chess figures
+    [[9698, 9701], [0x2586, 0x258B]], // Geometric figures
   ],
 });
 console.log(password); // Output "▋▆♟◥◢♎◥♚♞♚▆♚◥▆▉♝"
 ```
 
 The ranges option is array of UTF-8 char ranges.<br/>
-You can find all of them on [unicode table](https://symbl.cc/ru/unicode-table/#box-drawing)
+You can find all of them on [unicode table](https://symbl.cc/en/unicode-table)
 
-Example above contains UTF-8 chars with codes from 9800 to 9807 and from 9818 to 9823 (zodiac signs and chess figures).<br/>
-The example also contains UTF-8 chars with codes from 9698 to 9701 and from 9606 to 9611 (geometric figures).
+The example above includes UTF-8 characters with codes ranging from 9800 to 9807 and from 9818 to 9823, which represent zodiac signs and chess figures.<br/>
+It also includes characters with codes from 9698 to 9701 and from 0x2586 to 0x258B, representing geometric figures.
 
-This means that password will **necessarily** contain **one or more** chess figures **or** zodiac signs **and** one or more geometric figures.<br/>
-But it doesn't mean that password will contain zodiac signs **and** chess figures because they are part of one range.<br/>
-If you want make password with zodiac signs **and** chess figures you should move chess figures to new range.
+This implies that the password will **necessarily** contain **one or more** chess figures **or** zodiac signs **and** one or more geometric figures.<br/>
+However, it does not mean that the password will contain both zodiac signs and chess figures, as they are part of the same range.<br/>
+If you want to create a password that includes **both** zodiac signs **and** chess figures, you should move the chess figures to a new range.
 
 For example:
 
@@ -130,30 +146,30 @@ const password = passfather({
   symbols: false,
   length: 16,
   ranges: [ 
-    [[9800, 9807]], // Group of char range. Zodiac signs
-    [[9818, 9823]], // Group of char range. Chess figures.
-    [[9698, 9701], [9606, 9611]], // Group of char range. Geometric figures
+    [[9800, 9807]], // Group of character ranges including zodiac signs
+    [[9818, 9823]], // Chess figures.
+    [[9698, 9701], [0x2586, 0x258B]], // Geometric figures
   ],
 });
 console.log(password); // Output "♏◣♛◥♚♟♚♝♌▆♌♚♞▉♞♞"
 ```
 
-Making new range you get guarantee that one of char from range will be part of password.
+By creating a new range, you ensure that at least one character from that range will be part of the password.
 
-Ranges may using together with number, uppercase, lowercase or symbols option.
+Ranges can be used in conjunction with the number, uppercase, lowercase, or symbols options.
 
 For example:
 
 ```javascript
 import passfather from 'passfather';
 const password = passfather({
-  // number, uppercase, lowercase or symbols enabled by default 
-  // so we just don't pass them.
+  // Number, uppercase, lowercase, and symbols are enabled by default, 
+  // so there is no need to pass them separately
   length: 16,
   ranges: [ 
     [[9800, 9807]],
     [[9818, 9823]],
-    [[9698, 9701], [9606, 9611]],
+    [[9698, 9701], [0x2586, 0x258B]],
   ],
 });
 console.log(password); // Output "♚!N◢♊q6DO1,3▉♌k5♞"
@@ -161,7 +177,7 @@ console.log(password); // Output "♚!N◢♊q6DO1,3▉♌k5♞"
 
 ## Contributing
 
-See [contributing](https://github.com/vyushin/passfather/blob/master/CONTRIBUTING.md) guideline.
+See [contributing](https://github.com/vyushin/passfather/blob/main/CONTRIBUTING.md) guideline.
 
 ## License
-[MIT LICENSE](https://github.com/vyushin/passfather/blob/master/LICENSE)
+[MIT LICENSE](https://github.com/vyushin/passfather/blob/main/LICENSE)

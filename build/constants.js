@@ -1,6 +1,6 @@
-const { resolve } = require('path');
-const { readFileSync } = require('fs');
-const PACKAGE_JSON = require('../package.json');
+import { resolve } from 'path';
+import { readFileSync } from 'fs';
+import PACKAGE_JSON from '../package.json';
 
 const BANNER = readFileSync(resolve('./BANNER'))
   .toString()
@@ -10,6 +10,6 @@ const BANNER = readFileSync(resolve('./BANNER'))
 const SRC_DIR  = resolve(__dirname, '../src');
 const DIST_DIR = resolve(__dirname, '../dist');
 
-module.exports = {
+export {
   SRC_DIR, DIST_DIR, PACKAGE_JSON, BANNER,
 };

@@ -1,12 +1,12 @@
-const { CHAR_RANGES } = require('../src/passfather');
-const { ERROR_MESSAGES, DEFAULT_OPTIONS } = require('../src/validatingOptions');
-const { random, getCharsByDiapason, without, escapeRegExp, randomItem, keys } = require('../src/utils');
-const PRNGs = require('../src/PRNGs');
-const passfather = require('../dist/passfather.js');
+const { CHAR_RANGES } = require('../../src/passfather');
+const { ERROR_MESSAGES, DEFAULT_OPTIONS } = require('../../src/validatingOptions');
+const { random, getCharsByDiapason, without, escapeRegExp, randomItem, keys } = require('../../src/utils');
+const PRNGs = require('../../src/PRNGs');
+const passfather = require('../../dist/umd/passfather.min.js');
 
 CHAR_RANGES.push([ // Fictional ranges
   [[1248, 1263]],
-  [[1264, 1279], [1680, 1695], [2320, 2335]]
+  [[1264, 1279], [1680, 1695], [0x0910, 0x091F]]
 ]);
 
 const CHARS = {
@@ -299,5 +299,38 @@ describe.each(PRNGsKeys)('Passfather main test', (prng) => {
         expect(p1).toBe(p2);
       });
     });
+
+    describe('Decimal and hexadecimal equivalence', () => {
+      it('Contains only !', () => {
+        const optinos = {
+          uppercase: false,
+          lowercase: false,
+          numbers: false,
+          symbols: false,
+          ranges: [
+            [[0x0021, 0x0021]],
+            [[33, 33]]
+          ],
+          length: 1024
+        };
+        const password = passfather(optinos)
+        expect(password).toMatch(/^[!]+$/)
+      });
+      it('Contains only 1, 2, 3, ←, ↑, →', () => {
+        const optinos = {
+          uppercase: false,
+          lowercase: false,
+          numbers: false,
+          symbols: false,
+          ranges: [
+            [[0x2190, 0x2192], [8592, 8594]],
+            [[0x0031, 0x0033], [49, 51]]
+          ],
+          length: 1024
+        };
+        const password = passfather(optinos)
+        expect(password).toMatch(/^[123←↑→]+$/)
+      });
+    })
   });
 });
