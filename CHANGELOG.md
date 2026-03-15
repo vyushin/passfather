@@ -1,5 +1,13 @@
 ## 4.2.0 (March 15, 2026)
 * Replaced fixed 2s timeout with HTTP polling in test/playwright/start.js to wait for the server to be ready before running Playwright tests
+* Improved CI workflow:
+  * Added npm cache (actions/cache)
+  * Removed Node.js 18.x from matrix (EOL), kept 20.x and 22.x
+  * Removed duplicate Build step (already runs via pretest)
+  * Added push trigger on main branch
+  * Added timeout-minutes: 15
+  * Added Playwright browser cache
+* Bump rollup from 2.79.2 to 2.80.0 in /build
 
 ## 4.1.0 (May 25, 2025)
 *  Changed ESM entry point to .mjs: passfather.min.js → passfather.min.mjs
