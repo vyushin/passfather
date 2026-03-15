@@ -1,3 +1,6 @@
+## 4.2.0 (March 15, 2026)
+* Replaced fixed 2s timeout with HTTP polling in test/playwright/start.js to wait for the server to be ready before running Playwright tests
+
 ## 4.1.0 (May 25, 2025)
 *  Changed ESM entry point to .mjs: passfather.min.js → passfather.min.mjs
 * Updated all references in README.md, package.json, Playwright test HTML, and rollup.config.js to use .mjs

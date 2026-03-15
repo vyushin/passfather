@@ -3,8 +3,11 @@ const { setTimeout } = require('timers/promises');
 const path = require('path');
 const kill = require('tree-kill');
 const net = require('net');
+const http = require('http');
 
 const PORT = 3002;
+const SERVER_TIMEOUT = 30000;
+const POLL_INTERVAL = 500;
 
 const isPortAvailable = async (port) => {
   return new Promise((resolve) => {
@@ -17,6 +20,29 @@ const isPortAvailable = async (port) => {
       .listen(port);
   });
 }
+
+const waitForServer = async (port, timeout = SERVER_TIMEOUT) => {
+  const start = Date.now();
+  while (Date.now() - start < timeout) {
+    try {
+      await new Promise((resolve, reject) => {
+        const req = http.get(`http://localhost:${port}`, (res) => {
+          res.resume();
+          resolve();
+        });
+        req.on('error', reject);
+        req.setTimeout(1000, () => {
+          req.destroy();
+          reject(new Error('timeout'));
+        });
+      });
+      return true;
+    } catch {
+      await setTimeout(POLL_INTERVAL);
+    }
+  }
+  return false;
+};
 
 (async () => {
   const rootDir = path.resolve(__dirname, '../..');
@@ -35,7 +61,14 @@ const isPortAvailable = async (port) => {
 
   console.log(`[test] ✅ Server is starting at http://localhost:${PORT}`);
 
-  await setTimeout(2000); // wait for serve to start
+  const isReady = await waitForServer(PORT);
+  if (!isReady) {
+    console.error(`[test] ❌ Server did not start within ${SERVER_TIMEOUT / 1000}s`);
+    kill(server.pid, 'SIGTERM');
+    process.exit(1);
+  }
+
+  console.log(`[test] ✅ Server is ready`);
 
   const result = spawnSync('npx', ['playwright', 'test', '--config', playwrightConfigPath], {
     stdio: 'inherit',
