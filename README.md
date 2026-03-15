@@ -125,7 +125,8 @@ const password = passfather({
 console.log(password); // Output "▋▆♟◥◢♎◥♚♞♚▆♚◥▆▉♝"
 ```
 
-The ranges option is array of UTF-8 char ranges.<br/>
+The `ranges` option is an array of UTF-8 character ranges<br/>
+> Passfather supports a range from 0 to 65535 in the decimal system, and from 0x0000 to 0xFFFF in the hexadecimal system.<br/>
 You can find all of them on [unicode table](https://symbl.cc/en/unicode-table)
 
 The example above includes UTF-8 characters with codes ranging from 9800 to 9807 and from 9818 to 9823, which represent zodiac signs and chess figures.<br/>
