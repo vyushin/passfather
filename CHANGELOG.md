@@ -1,3 +1,16 @@
+## 4.2.1 (March 16, 2026)
+* Moved integration tests into separate directories (`cjs/`, `esm/`, `ts/`) each with its own `package.json`
+* Added React integration test (`test/integration/react/`) using `react-dom/server` `renderToString`
+* Frozen `CHAR_RANGES` and `DEFAULT_OPTIONS` with `Object.freeze` to prevent external mutation
+* Removed `CHAR_RANGES` mutation in tests — extracted fictional ranges into local `FICTIONAL_RANGES` constant
+* Removed `passfather.prototype._dev` from production code — PRNG selection in tests now uses `withPrng` helper via public API
+* Added unit tests for 23 utility functions in `utils.test.js` with edge cases (empty arrays, falsy values, circular references, Unicode ranges, regex special chars)
+* Rewrote `CONTRIBUTING.md` with full contributor guide: prerequisites, setup, project structure, build, testing, code style, PR workflow
+* Moved password generation in `passfather.test.js` from `describe` scope into `beforeEach` for proper test isolation
+* Fixed broken bundle paths in `example/esm/` and `example/umd/` (`dist/passfather.min.*` → `dist/esm/` / `dist/umd/`)
+* Refactored `seed.js` — replaced eager module-level constants (`DEFAULT_NODE_SEED`, `DEFAULT_BROWSER_SEED`) with functions (`getDefaultNodeSeed()`, `getDefaultBrowserSeed()`) that compute a fresh seed on every call
+* Bump Rollup from 2.80.0 to 4.59.0; replaced deprecated `rollup-plugin-terser` with `@rollup/plugin-terser`
+
 ## 4.2.0 (March 15, 2026)
 * Replaced fixed 2s timeout with HTTP polling in test/playwright/start.js to wait for the server to be ready before running Playwright tests
 * Improved CI workflow:

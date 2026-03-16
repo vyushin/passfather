@@ -1,8 +1,14 @@
-import { resolve } from 'path';
+import { resolve, dirname } from 'path';
 import { readFileSync } from 'fs';
-import PACKAGE_JSON from '../package.json';
+import { fileURLToPath } from 'url';
+import { createRequire } from 'module';
 
-const BANNER = readFileSync(resolve('./BANNER'))
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const require = createRequire(import.meta.url);
+const PACKAGE_JSON = require('../package.json');
+
+const BANNER = readFileSync(resolve(__dirname, './BANNER'))
   .toString()
   .replace(/\[version\]/, PACKAGE_JSON.version)
   .replace(/\[description\]/, PACKAGE_JSON.description)

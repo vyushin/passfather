@@ -1,0 +1,15 @@
+{
+  "private": true,
+  "dependencies": {
+    "passfather": "file:../../..",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "scripts": {
+    "clean": "rm -rf ./node_modules",
+    "pretest": "npm run clean && npm i",
+    "posttest": "npm run clean",
+    "test": "node index.jsx && echo '✅ React integration test passed'"
+  }
+}
+

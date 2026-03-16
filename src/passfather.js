@@ -1,21 +1,27 @@
 const { compact, assign, timesMap, isBrowser, ...utils } = require('./utils');
 const { OPTION_VALIDATORS, ERROR_MESSAGES, DEFAULT_OPTIONS } = require('./validatingOptions');
-const { DEFAULT_BROWSER_SEED, DEFAULT_NODE_SEED } = require('./seed');
+const { getDefaultBrowserSeed, getDefaultNodeSeed } = require('./seed');
 
 const _random = utils.random;
 const _randomItem = utils.randomItem;
 const _shuffle = utils.shuffle;
+const freeze = Object.freeze
 
 /**
  * UTF-8 char diapasons
  * @const
  */
-const CHAR_RANGES = [
-  [[48, 57]], // Numbers
-  [[65, 90]], // Uppercase
-  [[97, 122]], // Lowercase
-  [[33, 46], [58, 64], [94, 96], [123, 126]], // Symbols
-];
+const CHAR_RANGES = freeze([
+  freeze([freeze([48, 57])]), // Numbers
+  freeze([freeze([65, 90])]), // Uppercase
+  freeze([freeze([97, 122])]), // Lowercase
+  freeze([
+    freeze([33, 46]),
+    freeze([58, 64]),
+    freeze([94, 96]),
+    freeze([123, 126]),
+  ]), // Symbols
+]);
 
 /**
  * Returns char ranges by options
@@ -35,9 +41,9 @@ function getCharRanges(options) {
 function getEnvironmentSeed({ seed }) {
   const hasSeed = Boolean(seed);
   if (isBrowser()) {
-    return hasSeed ? seed : DEFAULT_BROWSER_SEED;
+    return hasSeed ? seed : getDefaultBrowserSeed();
   }
-  return hasSeed ? seed : DEFAULT_NODE_SEED;
+  return hasSeed ? seed : getDefaultNodeSeed();
 }
 
 /**
@@ -52,7 +58,7 @@ function passfather(options) {
     throw ERROR_MESSAGES[errorCode];
   }
 
-  const opts = assign({}, DEFAULT_OPTIONS, options, passfather.prototype._dev.options);
+  const opts = assign({}, DEFAULT_OPTIONS, options);
 
   const shuffle = (arr) => {
     const seed = _shuffle(getEnvironmentSeed(opts));
@@ -84,9 +90,6 @@ function passfather(options) {
   }).concat(requiredChars)).join('');
 }
 
-passfather.prototype._dev = {
-  options: {},
-};
 
 module.exports = {
   passfather,
