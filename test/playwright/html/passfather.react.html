@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Passfather React Browser Test</title>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+</head>
+<body>
+<div id="root"></div>
+<script type="module">
+  import passfather from 'http://localhost:3002/dist/esm/passfather.min.mjs';
+
+  function PasswordGenerator() {
+    const password = passfather({ length: 32 });
+    window.generatedPassword = password;
+    return React.createElement('div', { 'data-testid': 'password' }, password);
+  }
+
+  const root = ReactDOM.createRoot(document.getElementById('root'));
+  root.render(React.createElement(PasswordGenerator));
+</script>
+</body>
+</html>
+

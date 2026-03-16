@@ -2,6 +2,7 @@
 * Fixed React integration test — added HTML entity decoding for passwords extracted from `renderToString` output
 * Removed top-level `await` from ESM bundle — made `initExternals` synchronous
 * Fixed ESM bundle for both browser and Node.js ESM — use `globalThis.crypto` (Web Crypto API) instead of `require('crypto')`; `getRandomUint32()` now prefers `getRandomValues` with `randomBytes` as fallback
+* Added Playwright test for React component rendered in a real browser (client-side React via CDN + passfather ESM bundle)
 
 ## 4.2.1 (March 16, 2026)
 * Moved integration tests into separate directories (`cjs/`, `esm/`, `ts/`) each with its own `package.json`
