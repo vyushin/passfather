@@ -58,7 +58,7 @@ function passfather(options) {
     throw ERROR_MESSAGES[errorCode];
   }
 
-  const opts = assign({}, DEFAULT_OPTIONS, options, passfather.prototype._dev.options);
+  const opts = assign({}, DEFAULT_OPTIONS, options);
 
   const shuffle = (arr) => {
     const seed = _shuffle(getEnvironmentSeed(opts));
@@ -90,9 +90,6 @@ function passfather(options) {
   }).concat(requiredChars)).join('');
 }
 
-passfather.prototype._dev = {
-  options: {},
-};
 
 module.exports = {
   passfather,
