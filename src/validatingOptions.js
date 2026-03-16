@@ -12,7 +12,7 @@ const MODULE_NAME = name;
  * Default passfather options
  * @const
  */
-const DEFAULT_OPTIONS = {
+const DEFAULT_OPTIONS = Object.freeze({
   numbers: true,
   uppercase: true,
   lowercase: true,
@@ -21,7 +21,7 @@ const DEFAULT_OPTIONS = {
   ranges: null,
   prng: 'default',
   seed: null,
-};
+});
 
 /**
  * Functions to validate options

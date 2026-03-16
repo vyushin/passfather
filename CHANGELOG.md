@@ -1,3 +1,9 @@
+## 4.2.1 (March 16, 2026)
+* Moved integration tests into separate directories (`cjs/`, `esm/`, `ts/`) each with its own `package.json`
+* Added React integration test (`test/integration/react/`) using `react-dom/server` `renderToString`
+* Frozen `CHAR_RANGES` and `DEFAULT_OPTIONS` with `Object.freeze` to prevent external mutation
+* Removed `CHAR_RANGES` mutation in tests — extracted fictional ranges into local `FICTIONAL_RANGES` constant
+
 ## 4.2.0 (March 15, 2026)
 * Replaced fixed 2s timeout with HTTP polling in test/playwright/start.js to wait for the server to be ready before running Playwright tests
 * Improved CI workflow:

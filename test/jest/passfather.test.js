@@ -4,10 +4,10 @@ const { random, getCharsByDiapason, without, escapeRegExp, randomItem, keys } = 
 const PRNGs = require('../../src/PRNGs');
 const passfather = require('../../dist/umd/passfather.min.js');
 
-CHAR_RANGES.push([ // Fictional ranges
+const FICTIONAL_RANGES = [
   [[1248, 1263]],
   [[1264, 1279], [1680, 1695], [0x0910, 0x091F]]
-]);
+]
 
 const CHARS = {
   numbers: escapeRegExp(CHAR_RANGES[0].map(range => getCharsByDiapason(range)).join('')),
@@ -15,8 +15,8 @@ const CHARS = {
   lowercase: escapeRegExp(CHAR_RANGES[2].map(range => getCharsByDiapason(range)).join('')),
   symbols: escapeRegExp(CHAR_RANGES[3].map(range => getCharsByDiapason(range)).join('')),
   ranges: [
-    escapeRegExp(CHAR_RANGES[4][0].map(range => getCharsByDiapason(range)).join('')),
-    escapeRegExp(CHAR_RANGES[4][1].map(range => getCharsByDiapason(range)).join('')),
+    escapeRegExp(FICTIONAL_RANGES[0].map(range => getCharsByDiapason(range)).join('')),
+    escapeRegExp(FICTIONAL_RANGES[1].map(range => getCharsByDiapason(range)).join('')),
   ],
   all() {
     return `${this.numbers}${this.uppercase}${this.lowercase}${this.symbols}${this.ranges.join('')}`;
@@ -119,7 +119,7 @@ describe.each(PRNGsKeys)('Passfather main test', (prng) => {
       });
 
       it('Make password contains only ranges', () => {
-        const password = passfather({ numbers: false, uppercase: false, lowercase: false, symbols: false, ranges: CHAR_RANGES[4] });
+        const password = passfather({ numbers: false, uppercase: false, lowercase: false, symbols: false, ranges: FICTIONAL_RANGES });
         expect(password).toMatch(new RegExp(`^[${CHARS.ranges.join('')}]+$`));
       });
 
@@ -129,7 +129,7 @@ describe.each(PRNGsKeys)('Passfather main test', (prng) => {
 
       describe('Make short password with guaranteed numbers, uppercase, lowercase, symbols and ranges', () => {
         const length = 6; // [IMPORTANT] Length is important. number + uppercase + lowercase + symbol + two ranges = 6
-        const password = passfather({ length, ranges: CHAR_RANGES[4] });
+        const password = passfather({ length, ranges: FICTIONAL_RANGES });
         it('Default length', () => expect(password.length).toBe(length));
         it('Contains numbers', () => expect(password).toMatch(new RegExp(`[${CHARS.numbers}]+`)));
         it('Contains uppercase', () => expect(password).toMatch(new RegExp(`[${CHARS.uppercase}]+`)));
@@ -180,7 +180,7 @@ describe.each(PRNGsKeys)('Passfather main test', (prng) => {
 
       describe('Make short password with guaranteed ranges', () => {
         const length = 2;
-        const password = passfather({ length, numbers: false, uppercase: false, lowercase: false, symbols: false, ranges: CHAR_RANGES[4] });
+        const password = passfather({ length, numbers: false, uppercase: false, lowercase: false, symbols: false, ranges: FICTIONAL_RANGES });
         it('Default length', () => expect(password.length).toBe(length));
         it('Does not contains numbers', () => expect(password).not.toMatch(new RegExp(`[${CHARS.numbers}]+`)));
         it('Does not contains uppercase', () => expect(password).not.toMatch(new RegExp(`[${CHARS.uppercase}]+`)));
