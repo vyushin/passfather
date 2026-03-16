@@ -1,0 +1,13 @@
+{
+  "private": true,
+  "dependencies": {
+    "passfather": "file:../../.."
+  },
+  "scripts": {
+    "clean": "rm -rf ./node_modules",
+    "pretest": "npm run clean && npm i",
+    "posttest": "npm run clean",
+    "test": "node index.js && echo '✅ CJS integration test passed'"
+  }
+}
+

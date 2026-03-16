@@ -1,5 +1,5 @@
 {
-  "pivate": true,
+  "private": true,
   "name": "passfather-build",
   "version": "1.0.0",
   "description": "Build passfather package to most compatibility with browsers and Node.js",
