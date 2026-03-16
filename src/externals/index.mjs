@@ -3,7 +3,6 @@ function isBrowser() {
 }
 
 async function initExternals() {
-  let os;
   let crypto;
 
   if (isBrowser()) {
