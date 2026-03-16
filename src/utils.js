@@ -19,6 +19,9 @@ function getCrypto() {
   if (globalThis.passfather?.externals?.crypto) {
     return globalThis.passfather.externals.crypto;
   }
+  if (typeof globalThis.crypto !== 'undefined') {
+    return globalThis.crypto;
+  }
   throw new Error('Crypto API is not available in this environment');
 }
 
@@ -36,9 +39,10 @@ function getRandomUint32(prng, seed) {
     return prngFn.uint32();
   }
   const crypto = getCrypto();
-  return isBrowser()
-    ? crypto.getRandomValues(new Uint32Array(1))[0]
-    : parseInt(crypto.randomBytes(4).toString('hex'), 16);
+  if (typeof crypto.getRandomValues === 'function') {
+    return crypto.getRandomValues(new Uint32Array(1))[0];
+  }
+  return parseInt(crypto.randomBytes(4).toString('hex'), 16);
 }
 
 /**
