@@ -2,14 +2,8 @@ function isBrowser() {
   return typeof window !== 'undefined' && typeof window.document !== 'undefined';
 }
 
-async function initExternals() {
-  let crypto;
-
-  if (isBrowser()) {
-    crypto = window.crypto;
-  } else {
-    crypto = await import('crypto').then(mod => mod.default || mod);
-  }
+function initExternals() {
+  const crypto = isBrowser() ? window.crypto : globalThis.crypto;
 
   globalThis.passfather = globalThis.passfather || {};
   globalThis.passfather.externals = { crypto };
