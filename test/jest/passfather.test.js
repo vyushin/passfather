@@ -35,7 +35,8 @@ describe.each(PRNGsKeys)('Passfather main test', (prng) => {
 
   describe(`Testing passfather with PRNG ${prng}`, () => {
     describe('Make password with default options', () => {
-      const password = passfather(withPrng());
+      let password;
+      beforeEach(() => { password = passfather(withPrng()); });
       it('Default length', () => expect(password.length).toBe(DEFAULT_OPTIONS.length));
       it('Contains numbers', () => expect(password).toMatch(new RegExp(`[${CHARS.numbers}]+`)));
       it('Contains uppercase', () => expect(password).toMatch(new RegExp(`[${CHARS.uppercase}]+`)));
@@ -44,7 +45,8 @@ describe.each(PRNGsKeys)('Passfather main test', (prng) => {
     });
 
     describe('Make password with empty options object', () => {
-      const password = passfather(withPrng({}));
+      let password;
+      beforeEach(() => { password = passfather(withPrng({})); });
       it('Default length', () => expect(password.length).toBe(DEFAULT_OPTIONS.length));
       it('Contains numbers', () => expect(password).toMatch(new RegExp(`[${CHARS.numbers}]+`)));
       it('Contains uppercase', () => expect(password).toMatch(new RegExp(`[${CHARS.uppercase}]+`)));
@@ -54,7 +56,8 @@ describe.each(PRNGsKeys)('Passfather main test', (prng) => {
 
     describe('Make password with custom length', () => {
       const length = random([10, 100]);
-      const password = passfather(withPrng({ length }));
+      let password;
+      beforeEach(() => { password = passfather(withPrng({ length })); });
       it('Custom length', () => expect(password.length).toBe(length));
       it('Contains numbers', () => expect(password).toMatch(new RegExp(`[${CHARS.numbers}]+`)));
       it('Contains uppercase', () => expect(password).toMatch(new RegExp(`[${CHARS.uppercase}]+`)));
@@ -65,7 +68,8 @@ describe.each(PRNGsKeys)('Passfather main test', (prng) => {
     describe('Make password without...', () => {
 
       describe('Make password without numbers', () => {
-        const password = passfather(withPrng({ numbers: false }));
+        let password;
+        beforeEach(() => { password = passfather(withPrng({ numbers: false })); });
         it('Default length', () => expect(password.length).toBe(DEFAULT_OPTIONS.length));
         it('Does not contain numbers', () => expect(password).not.toMatch(new RegExp(`[${CHARS.numbers}]+`)));
         it('Contains uppercase', () => expect(password).toMatch(new RegExp(`[${CHARS.uppercase}]+`)));
@@ -74,7 +78,8 @@ describe.each(PRNGsKeys)('Passfather main test', (prng) => {
       });
 
       describe('Make password without uppercase', () => {
-        const password = passfather(withPrng({ uppercase: false }));
+        let password;
+        beforeEach(() => { password = passfather(withPrng({ uppercase: false })); });
         it('Default length', () => expect(password.length).toBe(DEFAULT_OPTIONS.length));
         it('Contains numbers', () => expect(password).toMatch(new RegExp(`[${CHARS.numbers}]+`)));
         it('Does not contain uppercase', () => expect(password).not.toMatch(new RegExp(`[${CHARS.uppercase}]+`)));
@@ -83,7 +88,8 @@ describe.each(PRNGsKeys)('Passfather main test', (prng) => {
       });
 
       describe('Make password without lowercase', () => {
-        const password = passfather(withPrng({ lowercase: false }));
+        let password;
+        beforeEach(() => { password = passfather(withPrng({ lowercase: false })); });
         it('Default length', () => expect(password.length).toBe(DEFAULT_OPTIONS.length));
         it('Contains numbers', () => expect(password).toMatch(new RegExp(`[${CHARS.numbers}]+`)));
         it('Contains uppercase', () => expect(password).toMatch(new RegExp(`[${CHARS.uppercase}]+`)));
@@ -92,7 +98,8 @@ describe.each(PRNGsKeys)('Passfather main test', (prng) => {
       });
 
       describe('Make password without symbols', () => {
-        const password = passfather(withPrng({ symbols: false }));
+        let password;
+        beforeEach(() => { password = passfather(withPrng({ symbols: false })); });
         it('Default length', () => expect(password.length).toBe(DEFAULT_OPTIONS.length));
         it('Contains numbers', () => expect(password).toMatch(new RegExp(`[${CHARS.numbers}]+`)));
         it('Contains uppercase', () => expect(password).toMatch(new RegExp(`[${CHARS.uppercase}]+`)));
@@ -135,7 +142,8 @@ describe.each(PRNGsKeys)('Passfather main test', (prng) => {
 
       describe('Make short password with guaranteed numbers, uppercase, lowercase, symbols and ranges', () => {
         const length = 6; // [IMPORTANT] Length is important. number + uppercase + lowercase + symbol + two ranges = 6
-        const password = passfather(withPrng({ length, ranges: FICTIONAL_RANGES }));
+        let password;
+        beforeEach(() => { password = passfather(withPrng({ length, ranges: FICTIONAL_RANGES })); });
         it('Default length', () => expect(password.length).toBe(length));
         it('Contains numbers', () => expect(password).toMatch(new RegExp(`[${CHARS.numbers}]+`)));
         it('Contains uppercase', () => expect(password).toMatch(new RegExp(`[${CHARS.uppercase}]+`)));
@@ -146,7 +154,8 @@ describe.each(PRNGsKeys)('Passfather main test', (prng) => {
 
       describe('Make short password with guaranteed numbers, uppercase, lowercase', () => {
         const length = 3;
-        const password = passfather(withPrng({ length, symbols: false }));
+        let password;
+        beforeEach(() => { password = passfather(withPrng({ length, symbols: false })); });
         it('Default length', () => expect(password.length).toBe(length));
         it('Contains numbers', () => expect(password).toMatch(new RegExp(`[${CHARS.numbers}]+`)));
         it('Contains uppercase', () => expect(password).toMatch(new RegExp(`[${CHARS.uppercase}]+`)));
@@ -156,7 +165,8 @@ describe.each(PRNGsKeys)('Passfather main test', (prng) => {
 
       describe('Make short password with guaranteed uppercase, lowercase, symbols', () => {
         const length = 3;
-        const password = passfather(withPrng({ length, numbers: false }));
+        let password;
+        beforeEach(() => { password = passfather(withPrng({ length, numbers: false })); });
         it('Default length', () => expect(password.length).toBe(length));
         it('Does not contain numbers', () => expect(password).not.toMatch(new RegExp(`[${CHARS.numbers}]+`)));
         it('Contains uppercase', () => expect(password).toMatch(new RegExp(`[${CHARS.uppercase}]+`)));
@@ -166,7 +176,8 @@ describe.each(PRNGsKeys)('Passfather main test', (prng) => {
 
       describe('Make short password with guaranteed lowercase, symbols, numbers', () => {
         const length = 3;
-        const password = passfather(withPrng({ length, uppercase: false }));
+        let password;
+        beforeEach(() => { password = passfather(withPrng({ length, uppercase: false })); });
         it('Default length', () => expect(password.length).toBe(length));
         it('Contains numbers', () => expect(password).toMatch(new RegExp(`[${CHARS.numbers}]+`)));
         it('Does not contain uppercase', () => expect(password).not.toMatch(new RegExp(`[${CHARS.uppercase}]+`)));
@@ -176,7 +187,8 @@ describe.each(PRNGsKeys)('Passfather main test', (prng) => {
 
       describe('Make short password with guaranteed symbols, numbers, uppercase', () => {
         const length = 3;
-        const password = passfather(withPrng({ length, lowercase: false }));
+        let password;
+        beforeEach(() => { password = passfather(withPrng({ length, lowercase: false })); });
         it('Default length', () => expect(password.length).toBe(length));
         it('Contains numbers', () => expect(password).toMatch(new RegExp(`[${CHARS.numbers}]+`)));
         it('Contains uppercase', () => expect(password).toMatch(new RegExp(`[${CHARS.uppercase}]+`)));
@@ -186,7 +198,8 @@ describe.each(PRNGsKeys)('Passfather main test', (prng) => {
 
       describe('Make short password with guaranteed ranges', () => {
         const length = 2;
-        const password = passfather(withPrng({ length, numbers: false, uppercase: false, lowercase: false, symbols: false, ranges: FICTIONAL_RANGES }));
+        let password;
+        beforeEach(() => { password = passfather(withPrng({ length, numbers: false, uppercase: false, lowercase: false, symbols: false, ranges: FICTIONAL_RANGES })); });
         it('Default length', () => expect(password.length).toBe(length));
         it('Does not contains numbers', () => expect(password).not.toMatch(new RegExp(`[${CHARS.numbers}]+`)));
         it('Does not contains uppercase', () => expect(password).not.toMatch(new RegExp(`[${CHARS.uppercase}]+`)));
