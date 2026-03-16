@@ -1,6 +1,6 @@
 const { compact, assign, timesMap, isBrowser, ...utils } = require('./utils');
 const { OPTION_VALIDATORS, ERROR_MESSAGES, DEFAULT_OPTIONS } = require('./validatingOptions');
-const { DEFAULT_BROWSER_SEED, DEFAULT_NODE_SEED } = require('./seed');
+const { getDefaultBrowserSeed, getDefaultNodeSeed } = require('./seed');
 
 const _random = utils.random;
 const _randomItem = utils.randomItem;
@@ -41,9 +41,9 @@ function getCharRanges(options) {
 function getEnvironmentSeed({ seed }) {
   const hasSeed = Boolean(seed);
   if (isBrowser()) {
-    return hasSeed ? seed : DEFAULT_BROWSER_SEED;
+    return hasSeed ? seed : getDefaultBrowserSeed();
   }
-  return hasSeed ? seed : DEFAULT_NODE_SEED;
+  return hasSeed ? seed : getDefaultNodeSeed();
 }
 
 /**

@@ -8,6 +8,7 @@
 * Rewrote `CONTRIBUTING.md` with full contributor guide: prerequisites, setup, project structure, build, testing, code style, PR workflow
 * Moved password generation in `passfather.test.js` from `describe` scope into `beforeEach` for proper test isolation
 * Fixed broken bundle paths in `example/esm/` and `example/umd/` (`dist/passfather.min.*` → `dist/esm/` / `dist/umd/`)
+* Refactored `seed.js` — replaced eager module-level constants (`DEFAULT_NODE_SEED`, `DEFAULT_BROWSER_SEED`) with functions (`getDefaultNodeSeed()`, `getDefaultBrowserSeed()`) that compute a fresh seed on every call
 
 ## 4.2.0 (March 15, 2026)
 * Replaced fixed 2s timeout with HTTP polling in test/playwright/start.js to wait for the server to be ready before running Playwright tests
