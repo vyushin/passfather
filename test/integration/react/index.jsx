@@ -8,6 +8,15 @@ function PasswordGenerator() {
 }
 
 const html = renderToString(React.createElement(PasswordGenerator));
+function decodeHTMLEntities(str) {
+  return str
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#x27;/g, "'");
+}
+
 const match = html.match(/>([^<]+)</);
 
 if (!match || !match[1]) {
@@ -16,7 +25,7 @@ if (!match || !match[1]) {
   process.exit(1);
 }
 
-const password = match[1];
+const password = decodeHTMLEntities(match[1]);
 
 if (typeof password !== 'string' || password.length !== 32) {
   console.error('[react] ❌ Invalid password:', password);
