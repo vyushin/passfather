@@ -1,10 +1,10 @@
 import path from 'path';
 import json from '@rollup/plugin-json';
 import commonjs from '@rollup/plugin-commonjs';
-import { terser } from 'rollup-plugin-terser';
+import terser from '@rollup/plugin-terser';
 import copy from 'rollup-plugin-copy';
 
-import { SRC_DIR, DIST_DIR, BANNER } from './constants';
+import { SRC_DIR, DIST_DIR, BANNER } from './constants.js';
 
 export default [
   // ESM

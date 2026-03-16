@@ -1,5 +1,6 @@
 {
   "private": true,
+  "type": "module",
   "name": "passfather-build",
   "version": "1.0.0",
   "description": "Build passfather package to most compatibility with browsers and Node.js",
@@ -25,10 +26,10 @@
   "main": "./index.js",
   "license": "MIT",
   "devDependencies": {
-    "rollup": "2.80.0",
+    "rollup": "4.59.0",
     "@rollup/plugin-commonjs": "28.0.3",
     "@rollup/plugin-json": "6.1.0",
-    "rollup-plugin-copy": "^3.5.0",
-    "rollup-plugin-terser": "7.0.2"
+    "@rollup/plugin-terser": "1.0.0",
+    "rollup-plugin-copy": "^3.5.0"
   }
 }
