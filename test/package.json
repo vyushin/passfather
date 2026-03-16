@@ -17,7 +17,7 @@
   "scripts": {
     "test:playwright": "node ./playwright/start",
     "test:jest": "jest ./jest --config ./jest/jest.config.js",
-    "test:integration": "cd ./integration/cjs && npm test && cd ../esm && npm test && cd ../ts && npm test",
+    "test:integration": "cd ./integration/cjs && npm test && cd ../esm && npm test && cd ../ts && npm test && cd ../react && npm test",
     "test": "npm run test:jest && npm run test:playwright && npm run test:integration"
   },
   "bugs": {
