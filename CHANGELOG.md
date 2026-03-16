@@ -4,6 +4,7 @@
 * Frozen `CHAR_RANGES` and `DEFAULT_OPTIONS` with `Object.freeze` to prevent external mutation
 * Removed `CHAR_RANGES` mutation in tests — extracted fictional ranges into local `FICTIONAL_RANGES` constant
 * Removed `passfather.prototype._dev` from production code — PRNG selection in tests now uses `withPrng` helper via public API
+* Added unit tests for 23 utility functions in `utils.test.js` with edge cases (empty arrays, falsy values, circular references, Unicode ranges, regex special chars)
 
 ## 4.2.0 (March 15, 2026)
 * Replaced fixed 2s timeout with HTTP polling in test/playwright/start.js to wait for the server to be ready before running Playwright tests
