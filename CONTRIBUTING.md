@@ -16,7 +16,14 @@ git clone https://github.com/<your-username>/passfather.git
 cd passfather
 ```
 
-2. Install all dependencies (build + test):
+2. Clean all generated artifacts and dependencies (optional).
+   This command removes all `node_modules/` and `dist/` directories in the repository.
+
+```bash
+npm run clean-all
+```
+
+3. Install all dependencies (build + test):
 
 ```bash
 npm run install-all
