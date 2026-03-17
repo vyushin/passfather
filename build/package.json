@@ -24,6 +24,9 @@
   },
   "homepage": "https://github.com/vyushin/passfather/build",
   "main": "./index.js",
+  "engines": {
+    "node": ">=20"
+  },
   "license": "MIT",
   "devDependencies": {
     "rollup": "4.59.0",

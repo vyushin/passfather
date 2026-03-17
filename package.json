@@ -35,6 +35,9 @@
     }
   },
   "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
   "keywords": [
     "password",
     "generator",

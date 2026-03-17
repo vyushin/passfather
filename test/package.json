@@ -25,6 +25,9 @@
   },
   "homepage": "https://github.com/vyushin/passfather/test",
   "main": "./index.js",
+  "engines": {
+    "node": ">=20"
+  },
   "license": "MIT",
   "devDependencies": {
     "@playwright/test": "1.52.0",

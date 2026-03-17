@@ -1,3 +1,6 @@
+## 5.0.0 (?)
+* Raised minimum supported Node.js version to 20+ across the project and subpackages (`engines.node: >=20`)
+
 ## 4.2.2 (March 16, 2026)
 * Fixed React integration test — added HTML entity decoding for passwords extracted from `renderToString` output
 * Removed top-level `await` from ESM bundle — made `initExternals` synchronous
