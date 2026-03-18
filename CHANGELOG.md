@@ -1,4 +1,7 @@
-## 5.0.0 (?)
+## 5.0.1 (March 18, 2026)
+* Removed `initExternals` and `src/externals/` — `getCrypto()` now resolves crypto directly via `window.crypto` (browser) or `globalThis.crypto` (Node.js 15+ Web Crypto API), eliminating the indirection through `globalThis.passfather.externals`
+
+## 5.0.0 (March 17, 2026)
 * Raised minimum supported Node.js version to 20+ across the project and subpackages (`engines.node: >=20`)
 * Added root npm script `clean-all` to remove all `node_modules/` and `dist/` directories across the repository
 

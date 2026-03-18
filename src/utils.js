@@ -16,9 +16,6 @@ function getCrypto() {
   if (isBrowser() && typeof window.crypto !== 'undefined') {
     return window.crypto;
   }
-  if (globalThis.passfather?.externals?.crypto) {
-    return globalThis.passfather.externals.crypto;
-  }
   if (typeof globalThis.crypto !== 'undefined') {
     return globalThis.crypto;
   }

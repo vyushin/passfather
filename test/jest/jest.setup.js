@@ -1,5 +1,1 @@
-globalThis.passfather = {
-  externals: {
-    crypto: require('crypto'),
-  },
-};
+// No setup required
